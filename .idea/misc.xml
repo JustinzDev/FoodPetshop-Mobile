@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/drawable/static_rv_bg.xml" value="0.1445" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/drawable/static_rv_listitem_bg.xml" value="0.1935" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/static_rv_item.xml" value="0.5" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/static_rv_listitem.xml" value="0.5" />
       </map>
     </option>
   </component>

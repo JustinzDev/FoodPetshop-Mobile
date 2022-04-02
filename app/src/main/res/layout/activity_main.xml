@@ -65,13 +65,42 @@
                 app:iss_auto_cycle="true"
                 app:iss_period="3000" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="270dp"
+                android:layout_marginLeft="10dp"
+                android:text="Categoties"
+                android:textSize="22dp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_1"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_below="@+id/image_slider"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="480dp"
+                android:text="Product list"
+                android:textSize="22dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_listitem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rv_1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

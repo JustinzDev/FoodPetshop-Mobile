@@ -1,11 +1,14 @@
 package th.ac.kmutnb.foodpetshop;
 
 import android.app.ProgressDialog;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Adapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private StaticRvAdapter staticRvAdapter;
 
+    private RecyclerView recyclerViewListitem;
+    private ListItemAdapter listitemAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +54,12 @@ public class MainActivity extends AppCompatActivity {
         item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารนก"));
         item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารปลา"));
         item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารอื่นๆ"));
+        item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารคน"));
 
         recyclerView = findViewById(R.id.rv_1);
         staticRvAdapter = new StaticRvAdapter(item);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(staticRvAdapter);
-
-
 
         //SlideImage
         imageSlider = findViewById(R.id.image_slider);
@@ -65,6 +70,31 @@ public class MainActivity extends AppCompatActivity {
         images.add(new SlideModel(R.drawable.imgslide3, null));
 
         imageSlider.setImageList(images, ScaleTypes.CENTER_CROP);
+
+        //itemlist
+
+        ArrayList<ListItemModel> listitem = new ArrayList<>();
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+
+        recyclerViewListitem = findViewById(R.id.rv_listitem);
+        listitemAdapter = new ListItemAdapter(listitem);
+        recyclerViewListitem.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
+        recyclerViewListitem.setAdapter(listitemAdapter);
 
 //        String APIURL = "http://192.168.0.105:4000/api/items/getitem";
 //
