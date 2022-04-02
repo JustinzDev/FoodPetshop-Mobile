@@ -42,16 +42,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="340dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/imgbutton" />
+                android:src="@drawable/buttonlistmenu" />
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="220dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/cartbutton" />
@@ -63,15 +63,20 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="65dp"
                 app:iss_auto_cycle="true"
-                app:iss_period="3000"
-                />
+                app:iss_period="3000" />
 
-<!--            <ImageView-->
-<!--                android:layout_width="360dp"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginTop="58dp"-->
-<!--                android:src="@drawable/imgslide1" />-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/image_slider"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="0" />
 
         </RelativeLayout>
 
