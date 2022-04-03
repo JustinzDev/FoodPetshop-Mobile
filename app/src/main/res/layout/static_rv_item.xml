@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="100dp"
-    android:layout_height="130dp"
+    android:layout_height="140dp"
     android:id="@+id/linearLayout"
     android:layout_marginTop="20dp"
     android:layout_marginRight="10dp"
@@ -22,9 +22,10 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="อาหารแมว"
-        android:textSize="14sp"
         android:layout_gravity="center"
-        />
+        android:fontFamily="@font/kanit"
+        android:text="อาหารแมว"
+        android:textColor="#686868"
+        android:textSize="14sp" />
 
 </LinearLayout>

@@ -22,6 +22,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,18 +44,21 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerViewListitem;
     private ListItemAdapter listitemAdapter;
 
+    private ArrayList<ListItemModel> listitem = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ArrayList<StatisRvModel> item = new ArrayList<>();
-        item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารแมว"));
-        item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารหมา"));
-        item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารนก"));
-        item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารปลา"));
-        item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารอื่นๆ"));
-        item.add(new StatisRvModel(R.drawable.rvicon1, "อาหารคน"));
+        item.add(new StatisRvModel(R.drawable.cat, "อาหารแมว"));
+        item.add(new StatisRvModel(R.drawable.dog, "อาหารหมา"));
+        item.add(new StatisRvModel(R.drawable.bird, "อาหารนก"));
+        item.add(new StatisRvModel(R.drawable.fish, "อาหารปลา"));
+        item.add(new StatisRvModel(R.drawable.hamster, "อาหารหนูแฮมเตอร์"));
+        item.add(new StatisRvModel(R.drawable.hedgehog, "อาหารเม่น"));
+        item.add(new StatisRvModel(R.drawable.sugar, "อาหารชูก้าร์ไกรเดอร์"));
 
         recyclerView = findViewById(R.id.rv_1);
         staticRvAdapter = new StaticRvAdapter(item);
@@ -71,70 +75,56 @@ public class MainActivity extends AppCompatActivity {
 
         imageSlider.setImageList(images, ScaleTypes.CENTER_CROP);
 
-        //itemlist
+        String url = "http://192.168.0.105:4000/api/items/getitem";
 
-        ArrayList<ListItemModel> listitem = new ArrayList<>();
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
-        listitem.add(new ListItemModel(R.drawable.rvicon1, "อาหารแมว", "100 บาท / 3.0 KG"));
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Loading..");
+        pDialog.show();
 
+        JsonArrayRequest jsRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        Gson gson = new Gson();
+
+                        JSONObject jsObj;   // = null;
+                        for (int i=0; i < response.length(); i++ ) {
+                            try {
+                                jsObj = response.getJSONObject(i);
+                                ListItemModel dataitem = gson.fromJson(String.valueOf(jsObj), ListItemModel.class);
+                                listitem.add(dataitem);
+//                                Log.d(TAG,"gson "+ dataitem.getItemname());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        if (listitem.size() > 0){
+                            displayListview();
+                        }
+
+                        pDialog.hide();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG,error.toString());
+                        Toast.makeText(getBaseContext(),error.toString(),Toast.LENGTH_SHORT).show();
+                        pDialog.hide();
+                    }
+                });  // Request
+
+        mQueue = Volley.newRequestQueue(this);
+        jsRequest.setTag(REQUEST_TAG);
+        mQueue.add(jsRequest);
+    }
+
+    public void displayListview(){
         recyclerViewListitem = findViewById(R.id.rv_listitem);
         listitemAdapter = new ListItemAdapter(listitem);
         recyclerViewListitem.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         recyclerViewListitem.setAdapter(listitemAdapter);
-
-//        String APIURL = "http://192.168.0.105:4000/api/items/getitem";
-//
-//        pDialog = new ProgressDialog(this);
-//        pDialog.setMessage("Loading...");
-//        pDialog.show();
-//
-//        JsonArrayRequest jsRequest = new JsonArrayRequest(Request.Method.GET, APIURL, null,
-//            new Response.Listener<JSONArray>() {
-//                @Override
-//                public void onResponse(JSONArray response) {
-//                    JSONObject jsObj;
-//                    for (int i=0; i < response.length(); i++ ) {
-//                        try {
-//                            jsObj = response.getJSONObject(i);
-//                            String id = jsObj.getString("_id");
-//                            String itemname = jsObj.getString("itemname");
-//                            String itemdetail = jsObj.getString("itemdetail");
-//                            int itemprice = jsObj.getInt("itemprice");
-//                            int itemamount = jsObj.getInt("itemamount");
-//                            int itempopular = jsObj.getInt("itempopular");
-//                            String itemimg = jsObj.getString("itemimg");
-//                            Log.d(TAG,id + " , " + itemname + " , " + itemdetail + " , " + itemprice + " , " + itemamount + " , " + itempopular + " , " + itemimg);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    pDialog.hide();
-//                }
-//            },
-//            new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    // Error handling
-//                    Log.d(TAG, "onErrorResponse(): "+ error.getMessage());
-//                    pDialog.hide();
-//                }
-//            });  // stringRequest
-//
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        queue.add(jsRequest);
     }
 }
