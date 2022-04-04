@@ -49,7 +49,7 @@ public class ListitemCategory extends AppCompatActivity {
         String categoryModel = itn.getStringExtra("categoryModel");
         TextView categorytitie = findViewById(R.id.categoryTitle);
         categorytitie.setText("หมวดหมู่ > " + categoryName);
-        jsonParse("http://192.168.0.105:4000/api/items/getitem/" + categoryModel);
+        jsonParse("http://154.202.2.5:4990/api/items/getitem/" + categoryModel);
 
         ImageButton btnback = findViewById(R.id.backButton);
         btnback.setOnClickListener(new View.OnClickListener(){

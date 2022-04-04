@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         imageSlider.setImageList(images, ScaleTypes.CENTER_CROP);
 
-        jsonParse("http://192.168.0.105:4000/api/items/getitem");
+        jsonParse("http://154.202.2.5:4990/api/items/getitem");
     }
 
     public void jsonParse(String url){
