@@ -1,14 +1,17 @@
 package th.ac.kmutnb.foodpetshop;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,9 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -27,8 +27,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-    ImageSlider imageSlider;
+public class ListitemCategory extends AppCompatActivity {
 
     public static final String REQUEST_TAG = "myrequest";
     private static final String TAG = "my_app";
@@ -40,43 +39,30 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<ListItemModel> listitem = new ArrayList<>();
 
-    private RecyclerView recyclerView;
-    private StaticRvAdapter staticRvAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_listitem_category);
 
-        ArrayList<StatisRvModel> item = new ArrayList<>();
-        item.add(new StatisRvModel(R.drawable.cat, "อาหารแมว", "Cat"));
-        item.add(new StatisRvModel(R.drawable.dog, "อาหารหมา", "Dog"));
-        item.add(new StatisRvModel(R.drawable.bird, "อาหารนก", "Bird"));
-        item.add(new StatisRvModel(R.drawable.fish, "อาหารปลา", "Fish"));
-        item.add(new StatisRvModel(R.drawable.hamster, "อาหารหนูแฮมเตอร์", "Hamster"));
-        item.add(new StatisRvModel(R.drawable.hedgehog, "อาหารเม่น", "Hedgehog"));
-        item.add(new StatisRvModel(R.drawable.sugar, "อาหารชูก้าร์ไกรเดอร์", "Sugar"));
+        Intent itn = getIntent();
+        String categoryName = itn.getStringExtra("categoryName");
+        String categoryModel = itn.getStringExtra("categoryModel");
+        TextView categorytitie = findViewById(R.id.categoryTitle);
+        categorytitie.setText("หมวดหมู่ > " + categoryName);
+        jsonParse("http://192.168.0.105:4000/api/items/getitem/" + categoryModel);
 
-        staticRvAdapter = new StaticRvAdapter(item);
-        recyclerView = findViewById(R.id.rv_listitemcategory);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(staticRvAdapter);
-
-        //SlideImage
-        imageSlider = findViewById(R.id.image_slider);
-
-        ArrayList<SlideModel> images = new ArrayList<>();
-        images.add(new SlideModel(R.drawable.imgslide1, null));
-        images.add(new SlideModel(R.drawable.imgslide2, null));
-        images.add(new SlideModel(R.drawable.imgslide3, null));
-
-        imageSlider.setImageList(images, ScaleTypes.CENTER_CROP);
-
-        jsonParse("http://192.168.0.105:4000/api/items/getitem");
+        ImageButton btnback = findViewById(R.id.backButton);
+        btnback.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent itn = new Intent(view.getContext(), MainActivity.class);
+                startActivity(itn);
+            }
+        });
     }
 
     public void jsonParse(String url){
-        pDialog = new ProgressDialog(MainActivity.this);
+        pDialog = new ProgressDialog(ListitemCategory.this);
         pDialog.setMessage("Loading..");
         pDialog.show();
 
@@ -111,18 +97,18 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG,error.toString());
-                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ListitemCategory.this,error.toString(),Toast.LENGTH_SHORT).show();
                         pDialog.hide();
                     }
                 });  // Request
 
-        mQueue = Volley.newRequestQueue(MainActivity.this);
+        mQueue = Volley.newRequestQueue(ListitemCategory.this);
         jsRequest.setTag(REQUEST_TAG);
         mQueue.add(jsRequest);
     }
 
     public void displayListview(){
-        recyclerViewListitem = findViewById(R.id.rv_listitem);
+        recyclerViewListitem = findViewById(R.id.rv_listitemcategory);
         listitemAdapter = new ListItemAdapter(listitem);
         recyclerViewListitem.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         recyclerViewListitem.setAdapter(listitemAdapter);

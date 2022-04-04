@@ -23,7 +23,6 @@ import java.util.List;
 public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHolder>{
     private static final String TAG = "my_app";
     private List<ListItemModel> listitems;
-
     private String baseURL = "http://154.202.2.5/foodpetshop/img/";
 
     public ListItemAdapter(List<ListItemModel> listitems){

@@ -32,18 +32,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:fontFamily="@font/kanit"
-                android:text="Username"
+                android:text="Welcome"
                 android:textColor="#FFFFFF"
-                android:textSize="22dp"
+                android:textSize="30dp"
                 android:textStyle="bold" />
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="340dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/buttonlistmenu" />
@@ -51,18 +51,18 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="220dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/cartbutton" />
 
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/image_slider"
-                android:layout_width="320dp"
-                android:layout_height="180dp"
+                android:layout_width="380dp"
+                android:layout_height="210dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="65dp"
+                android:layout_marginTop="105dp"
                 app:iss_auto_cycle="true"
                 app:iss_period="3000" />
 
@@ -70,18 +70,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="270dp"
+                android:layout_marginTop="380dp"
                 android:fontFamily="@font/kanit"
                 android:text="Categoties"
                 android:textSize="22dp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_1"
+                android:id="@+id/rv_listitemcategory"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_below="@+id/image_slider"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginRight="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="480dp"
+                android:layout_marginTop="620dp"
                 android:fontFamily="@font/kanit"
                 android:text="Product list"
                 android:textSize="22dp" />
@@ -101,9 +101,9 @@
                 android:id="@+id/rv_listitem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/rv_1"
+                android:layout_below="@+id/rv_listitemcategory"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginRight="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
