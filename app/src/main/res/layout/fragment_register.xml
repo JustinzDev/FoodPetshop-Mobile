@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
+    tools:context=".RegisterFragment">
+
+    <!-- TODO: Update blank fragment layout -->
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
@@ -42,7 +44,7 @@
             app:layout_constraintHorizontal_bias="0.472"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.142" />
+            app:layout_constraintVertical_bias="0.111" />
 
         <TextView
             android:id="@+id/txt_Topic1"
@@ -51,7 +53,7 @@
             android:layout_marginTop="8dp"
 
             android:fontFamily="@font/kanit"
-            android:text="Login"
+            android:text="Register"
             android:textColor="#353535"
             android:textSize="25dp"
             android:textStyle=""
@@ -59,6 +61,7 @@
             app:layout_constraintHorizontal_bias="0.127"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
 
         <EditText
             android:id="@+id/InputUsername"
@@ -69,7 +72,7 @@
             android:drawablePadding="10dp"
             android:ems="12"
             android:fontFamily="@font/kanit"
-            android:hint="ชื่อผู้ใช้"
+            android:hint="Username"
             android:inputType="textPersonName"
             android:minHeight="50dp"
             android:paddingStart="15dp"
@@ -79,43 +82,95 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            app:layout_constraintVertical_bias="0.129" />
+            app:layout_constraintVertical_bias="0.119" />
 
         <EditText
-            android:id="@+id/InputPassword"
+            android:id="@+id/InputEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/ic_baseline_email_24"
             android:drawablePadding="10dp"
             android:ems="12"
-            android:text=""
+            android:fontFamily="@font/kanit"
+            android:hint="Email"
+            android:inputType="textPersonName"
+            android:minHeight="50dp"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
-            android:background="@drawable/custom_input"
-            android:fontFamily="@font/kanit"
-            android:hint="รหัสผ่าน"
-            android:inputType="textPassword"
-            android:minHeight="50dp"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/InputUsername"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/InputUsername"
             app:layout_constraintTop_toBottomOf="@+id/InputUsername"
-            app:layout_constraintVertical_bias="0.075" />
+            app:layout_constraintVertical_bias="0.073" />
 
-        <ImageButton
-            android:id="@+id/loginButton"
+        <EditText
+            android:id="@+id/InputPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/buttonlogin"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/ic_baseline_phone_android_24"
+            android:drawablePadding="10dp"
+            android:ems="12"
+            android:fontFamily="@font/kanit"
+            android:hint="Phone"
+            android:inputType="numberDecimal"
+            android:minHeight="50dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.164"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/InputEmail"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/InputEmail"
+            app:layout_constraintTop_toBottomOf="@+id/InputEmail"
+            app:layout_constraintVertical_bias="0.079" />
+
+        <EditText
+            android:id="@+id/InputPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="10dp"
+            android:ems="12"
+            android:fontFamily="@font/kanit"
+            android:hint="รหัสผ่าน"
+            android:inputType="textPassword"
+            android:minHeight="50dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/InputPhone"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/InputPhone"
+            app:layout_constraintTop_toBottomOf="@+id/InputPhone"
+            app:layout_constraintVertical_bias="0.104" />
+
+        <EditText
+            android:id="@+id/InputconfirmPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="10dp"
+            android:ems="12"
+            android:fontFamily="@font/kanit"
+            android:hint="ยืนยันรหัสผ่าน"
+            android:inputType="textPassword"
+            android:minHeight="50dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/InputPassword"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/InputPassword"
             app:layout_constraintTop_toBottomOf="@+id/InputPassword"
-            app:layout_constraintVertical_bias="0.155" />
+            app:layout_constraintVertical_bias="0.153" />
 
         <ImageButton
             android:id="@+id/registerButton"
@@ -126,14 +181,12 @@
             android:src="@drawable/register4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.835"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/InputPassword"
-            app:layout_constraintVertical_bias="0.151" />
+            app:layout_constraintTop_toBottomOf="@+id/InputconfirmPassword"
+            app:layout_constraintVertical_bias="0.541" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </FrameLayout>
