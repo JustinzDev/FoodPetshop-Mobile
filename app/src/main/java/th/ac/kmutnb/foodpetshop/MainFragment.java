@@ -2,17 +2,24 @@ package th.ac.kmutnb.foodpetshop;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,10 +27,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -31,6 +40,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainFragment extends Fragment {
 
@@ -39,6 +50,8 @@ public class MainFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
+    private View view;
 
     ImageSlider imageSlider;
 
@@ -54,7 +67,7 @@ public class MainFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private StaticRvAdapter staticRvAdapter;
-
+    SharedPreferences sp;
     public MainFragment() {
 
     }
@@ -80,7 +93,17 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        view = inflater.inflate(R.layout.fragment_main, container, false);
+        return view;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        SharedPreferences sp = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String Token = sp.getString("Token", "");
+        Log.i(TAG, "Homepage: " + Token);
+
         //SlideImage
         imageSlider = (ImageSlider) view.findViewById(R.id.image_slider);
         ArrayList<SlideModel> images = new ArrayList<>();
@@ -93,7 +116,7 @@ public class MainFragment extends Fragment {
         //Categorys
         ArrayList<StatisRvModel> item = new ArrayList<>();
         item.add(new StatisRvModel(R.drawable.cat, "อาหารแมว", "Cat"));
-        item.add(new StatisRvModel(R.drawable.dog, "อาหารหมา", "Dog"));
+        item.add(new StatisRvModel(R.drawable.dog, "อาหารสุนัข", "Dog"));
         item.add(new StatisRvModel(R.drawable.bird, "อาหารนก", "Bird"));
         item.add(new StatisRvModel(R.drawable.fish, "อาหารปลา", "Fish"));
         item.add(new StatisRvModel(R.drawable.hamster, "อาหารหนูแฮมเตอร์", "Hamster"));
@@ -106,11 +129,72 @@ public class MainFragment extends Fragment {
         recyclerView.setAdapter(staticRvAdapter);
 
         //itemlist
-        jsonParse("http://154.202.2.5:4990/api/items/getitem");
-        return view;
+        getItems("http://192.168.0.105:4990/api/items/getitems");
+        authToken("http://192.168.0.105:4990/api/users/auth_token", Token);
     }
 
-    public void jsonParse(String url){
+    public void authToken(String url, String Token){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i(TAG, response);
+
+                        String type = null;
+                        String userName = null;
+
+                        try {
+                            JSONObject jsonobject = new JSONObject(response);
+                            type = jsonobject.getString("type");
+                            userName = jsonobject.getString("username");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(type.matches("success") && userName != null){
+                            TextView tvUsername = getActivity().findViewById(R.id.txt_Username);
+                            tvUsername.setText(userName);
+
+                            TextView tvSlideNavigation = getActivity().findViewById(R.id.txUserNavi);
+                            tvSlideNavigation.setText(userName);
+
+                            ImageButton cartbutton = getActivity().findViewById(R.id.itemcart);
+                            cartbutton.setVisibility(View.VISIBLE);
+
+                            NavigationView navigationView = getActivity().findViewById(R.id.navigationView);
+                            Menu nav_Menu = navigationView.getMenu();
+                            nav_Menu.findItem(R.id.logout).setVisible(true);
+                            nav_Menu.findItem(R.id.loginFragment).setVisible(false);
+                        } else if(type.matches("exp")){
+                            SharedPreferences preferences = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+                            preferences.edit().remove("Token").commit();
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Error handling
+                        Log.i(TAG, "onErrorResponse(): "+
+                                error.getMessage());
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", Token);
+                return params;
+            }
+        };
+
+        mQueue = Volley.newRequestQueue(getActivity());
+        mQueue.add(stringRequest);
+    }
+
+    public void getItems(String url){
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading..");
         pDialog.show();
@@ -149,7 +233,7 @@ public class MainFragment extends Fragment {
                         Toast.makeText(getActivity(),error.toString(), Toast.LENGTH_SHORT).show();
                         pDialog.hide();
                     }
-                });  // Request
+                }); // Request
 
         mQueue = Volley.newRequestQueue(getActivity());
         jsRequest.setTag(REQUEST_TAG);

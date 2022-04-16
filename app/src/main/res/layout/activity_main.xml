@@ -26,26 +26,33 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
+                android:minHeight="48dp"
                 android:src="@drawable/buttonlistmenu" />
 
             <ImageButton
+                android:id="@+id/itemcart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/cartbutton" />
+                android:minHeight="48dp"
+                android:src="@drawable/cartbutton"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/txt_Username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/kanit"
                 android:layout_marginLeft="150dp"
+                android:contextClickable="true"
+                android:fontFamily="@font/kanit"
                 android:text="Welcome"
+                android:textAlignment="textEnd"
                 android:textColor="#FFFFFF"
                 android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:autoSizeTextType="uniform" />
 
         </LinearLayout>
 

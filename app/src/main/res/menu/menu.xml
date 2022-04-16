@@ -8,4 +8,9 @@
         android:id="@+id/loginFragment"
         android:title="เข้าสู่ระบบ/ลงทะเบียน" />
 
+    <item
+        android:id="@+id/logout"
+        android:title="ออกจากระบบ"
+        android:visible="false" />
+
 </menu>

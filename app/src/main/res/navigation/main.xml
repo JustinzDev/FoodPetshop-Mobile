@@ -20,4 +20,24 @@
         android:name="th.ac.kmutnb.foodpetshop.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/listitemCategoryFragment"
+        android:name="th.ac.kmutnb.foodpetshop.ListitemCategoryFragment"
+        android:label="fragment_listitem_category"
+        tools:layout="@layout/fragment_listitem_category" />
+    <fragment
+        android:id="@+id/itemInfoFragment"
+        android:name="th.ac.kmutnb.foodpetshop.ItemInfoFragment"
+        android:label="fragment_item_info"
+        tools:layout="@layout/fragment_item_info" />
+   <fragment
+       android:id="@+id/userCartFragment"
+       android:name="th.ac.kmutnb.foodpetshop.UserCartFragment"
+       android:label="fragment_user_cart"
+       tools:layout="@layout/fragment_user_cart" />
+    <fragment
+        android:id="@+id/cartItemInfoFragment"
+        android:name="th.ac.kmutnb.foodpetshop.CartItemInfoFragment"
+        android:label="fragment_cart_item_info"
+        tools:layout="@layout/fragment_cart_item_info" />
 </navigation>

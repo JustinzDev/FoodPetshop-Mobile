@@ -1,14 +1,17 @@
 package th.ac.kmutnb.foodpetshop;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +30,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ListitemCategory extends AppCompatActivity {
+public class ListitemCategoryFragment extends Fragment {
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    private String mParam1;
+    private String mParam2;
+
+    private View view;
 
     public static final String REQUEST_TAG = "myrequest";
     private static final String TAG = "my_app";
@@ -39,30 +49,55 @@ public class ListitemCategory extends AppCompatActivity {
 
     private ArrayList<ListItemModel> listitem = new ArrayList<>();
 
+    public ListitemCategoryFragment() {
+        // Required empty public constructor
+    }
+
+    public static ListitemCategoryFragment newInstance(String param1, String param2) {
+        ListitemCategoryFragment fragment = new ListitemCategoryFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listitem_category);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        Intent itn = getIntent();
-        String categoryName = itn.getStringExtra("categoryName");
-        String categoryModel = itn.getStringExtra("categoryModel");
-        TextView categorytitie = findViewById(R.id.categoryTitle);
-        categorytitie.setText("หมวดหมู่ > " + categoryName);
-        jsonParse("http://154.202.2.5:4990/api/items/getitem/" + categoryModel);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_listitem_category, container, false);
+        return view;
+    }
 
-        ImageButton btnback = findViewById(R.id.backButton);
-        btnback.setOnClickListener(new View.OnClickListener(){
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        ImageButton backbutton = view.findViewById(R.id.imagebuttonbackcart);
+        backbutton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Intent itn = new Intent(view.getContext(), MainActivity.class);
-                startActivity(itn);
+            public void onClick(View v){
+                Intent itnHome = new Intent(getActivity(), MainActivity.class);
+                startActivity(itnHome);
             }
         });
+
+        TextView categorytitie = view.findViewById(R.id.categoryTitle);
+        categorytitie.setText("หมวดหมู่ > " + mParam2);
+        jsonParse("http://192.168.0.105:4990/api/items/getitems/" + mParam1);
     }
 
     public void jsonParse(String url){
-        pDialog = new ProgressDialog(ListitemCategory.this);
+        pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading..");
         pDialog.show();
 
@@ -97,20 +132,20 @@ public class ListitemCategory extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG,error.toString());
-                        Toast.makeText(ListitemCategory.this,error.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_SHORT).show();
                         pDialog.hide();
                     }
                 });  // Request
 
-        mQueue = Volley.newRequestQueue(ListitemCategory.this);
+        mQueue = Volley.newRequestQueue(getActivity());
         jsRequest.setTag(REQUEST_TAG);
         mQueue.add(jsRequest);
     }
 
     public void displayListview(){
-        recyclerViewListitem = findViewById(R.id.rv_listitemcategory);
+        recyclerViewListitem = view.findViewById(R.id.rv_listitemcategory);
         listitemAdapter = new ListItemAdapter(listitem);
-        recyclerViewListitem.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
+        recyclerViewListitem.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
         recyclerViewListitem.setAdapter(listitemAdapter);
     }
 }

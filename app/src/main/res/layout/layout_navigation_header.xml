@@ -28,15 +28,15 @@
     </View>
 
     <TextView
+        android:id="@+id/txUserNavi"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="Username"
+        android:text="Welcome"
         android:textColor="@color/black"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/viewSupporter"
-        app:layout_constraintStart_toEndOf="@id/imageProfile">
-    </TextView>
+        app:layout_constraintStart_toEndOf="@id/imageProfile"></TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

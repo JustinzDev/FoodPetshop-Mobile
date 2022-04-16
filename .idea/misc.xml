@@ -17,12 +17,18 @@
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/app_bar_navbar_slide.xml" value="0.24947916666666667" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/content_navbar_slide.xml" value="0.24947916666666667" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/content_navdrawer.xml" value="0.24114583333333334" />
-        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/fragment_login.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/fragment_cart_item_info.xml" value="0.21458333333333332" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/fragment_item_info.xml" value="0.25" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/fragment_listitem_category.xml" value="0.25" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/fragment_login.xml" value="0.45625" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/fragment_main.xml" value="0.25" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/fragment_register.xml" value="0.25" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/fragment_user_cart.xml" value="0.23802083333333332" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/layout_navigation_header.xml" value="0.24947916666666667" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/nav_header.xml" value="0.24947916666666667" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/static_rv_cartlistitem.xml" value="0.33" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/static_rv_item.xml" value="0.75" />
-        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/static_rv_listitem.xml" value="0.67" />
+        <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/layout/static_rv_listitem.xml" value="0.2" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/menu/activity_main_drawer.xml" value="0.24114583333333334" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/menu/activity_navdrawer_drawer.xml" value="0.24947916666666667" />
         <entry key="..\:/Android Studio/Foodpetshop/app/src/main/res/menu/menu.xml" value="0.33" />

@@ -1,13 +1,10 @@
 package th.ac.kmutnb.foodpetshop;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,30 +14,27 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.navigation.NavigationView;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 public class RegisterFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "my_app";
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
+
+    private View view;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -66,14 +60,21 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_register, container, false);
+        return view;
+    }
 
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
+    @Override
+    public void onStart(){
+        super.onStart();
         ImageButton backbutton = view.findViewById(R.id.imagebuttonback);
         backbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent itnLoginfrag = new Intent(getActivity(), LoginFragment.class);
-                startActivity(itnLoginfrag);
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.navHostFragment, LoginFragment.newInstance(null, null));
+                transaction.commit();
             }
         });
 
@@ -82,17 +83,52 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                EditText username = view.findViewById(R.id.InputUsername);
-//                EditText password = view.findViewById(R.id.InputPassword);
-//                String usernameText = username.getText().toString();
-//                String passwordText = password.getText().toString();
+                EditText username = view.findViewById(R.id.inputamountitem);
+                EditText email = view.findViewById(R.id.InputEmail);
+                EditText phone = view.findViewById(R.id.InputPhone);
+                EditText password = view.findViewById(R.id.InputPassword);
+                EditText confirmpassword = view.findViewById(R.id.InputconfirmPassword);
+                String usernameText = username.getText().toString();
+                String emailText = email.getText().toString();
+                String phoneText = phone.getText().toString();
+                String passwordText = password.getText().toString();
+                String confirmpasswordText = confirmpassword.getText().toString();
 
-                String url = "http://192.168.0.105:4990/api/users/test";
+                if(usernameText.isEmpty() && emailText.isEmpty() && phoneText.isEmpty() && passwordText.isEmpty() && confirmpasswordText.isEmpty()){
+                    Toast.makeText(getActivity(), "คุณจำเป็นต้องกรอกให้ครบทุกช่อง", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String url = "http://192.168.0.105:4990/api/users/register";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST,url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 Log.i(TAG, response);
+
+                                String type = null;
+                                String message = null;
+
+                                try {
+                                    JSONObject jsonobject = new JSONObject(response);
+                                    type = jsonobject.getString("type");
+                                    message = jsonobject.getString("message");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if(type.matches("user_already")){
+                                    Toast.makeText(getActivity(), "ชื่อผู้ใช้หรืออีเมลนี้มีผู้ใช้งานแล้ว", Toast.LENGTH_SHORT).show();
+                                } else if(type.matches("wrong_password_notmatch")){
+                                    Toast.makeText(getActivity(), "รหัสผ่านทั้งสองช่องของคุณไม่ตรงกัน", Toast.LENGTH_SHORT).show();
+                                } else if(type.matches("success")){
+                                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+
+                                    FragmentManager manager = getFragmentManager();
+                                    FragmentTransaction transaction = manager.beginTransaction();
+                                    transaction.replace(R.id.navHostFragment, LoginFragment.newInstance(null, null));
+                                    transaction.commit();
+                                }
                             }
                         },
 
@@ -108,8 +144,11 @@ public class RegisterFragment extends Fragment {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
-//                        params.put("username", usernameText);
-//                        params.put("password", passwordText);
+                        params.put("username", usernameText);
+                        params.put("email", emailText);
+                        params.put("telephone", phoneText);
+                        params.put("password", passwordText);
+                        params.put("confirmpassword", confirmpasswordText);
                         return params;
                     }
                 };
@@ -119,7 +158,5 @@ public class RegisterFragment extends Fragment {
                 queue.add(stringRequest);
             }
         });
-
-        return view;
     }
 }

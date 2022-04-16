@@ -1,20 +1,14 @@
 package th.ac.kmutnb.foodpetshop;
 
-public class ListItemModel {
+public class CartListItemModel {
     private String _id;
     private String itemname;
     private String itemdetail;
-    private double itemprice;
+    private double itemtotalprice;
     private int itemamount;
-    private int itempopular;
     private String itemcategory;
     private String itemimg;
-
-//    public ListItemModel(int itemImage, String itemName, String itemDetail){
-//        this.itemImage = itemImage;
-//        this.itemName = itemName;
-//        this.itemDetail = itemDetail;
-//    }
+    private String itemownerid;
 
     public String getItemid() { return _id; }
 
@@ -38,19 +32,19 @@ public class ListItemModel {
 
     public void setItemdetail(String itemdetail) { this.itemdetail = itemdetail; }
 
-    public double getItemprice() { return itemprice; }
+    public double getItemprice() { return itemtotalprice; }
 
-    public void setItemprice(int itemprice) { this.itemprice = itemprice; }
+    public void setItemprice(int itemprice) { this.itemtotalprice = itemprice; }
 
     public int getItemamount() { return itemamount; }
 
     public void setItemamount(int itemamount) { this.itemamount = itemamount; }
 
-    public int getItempopular() { return itempopular; }
-
-    public void setItempopular(int itempopular) { this.itempopular = itempopular; }
-
     public String getItemcategory() { return itemcategory; }
 
     public void setItemcategory(String itemcategory) { this.itemcategory = itemcategory; }
+
+    public String getItemownerID() { return itemownerid; }
+
+    public void setItemownerID(String itemOwnerID) { this.itemownerid = itemOwnerID; }
 }

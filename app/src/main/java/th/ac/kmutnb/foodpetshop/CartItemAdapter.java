@@ -1,5 +1,7 @@
 package th.ac.kmutnb.foodpetshop;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,37 +22,32 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHolder>{
+public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHolder>{
     private static final String TAG = "my_app";
-    private List<ListItemModel> listitems;
+    private List<CartListItemModel> listitems;
     private String baseURL = "http://154.202.2.5/foodpetshop/img/";
 
-    public ListItemAdapter(List<ListItemModel> listitems){
+    public CartItemAdapter(List<CartListItemModel> listitems){
         this.listitems = listitems;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.static_rv_listitem, parent, false);
-        ViewHolder listitemViewHolder = new ViewHolder(view);
+    public CartItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.static_rv_cartlistitem, parent, false);
+        CartItemAdapter.ViewHolder listitemViewHolder = new CartItemAdapter.ViewHolder(view);
         return listitemViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListItemModel currentItem = listitems.get(position);
+    public void onBindViewHolder(@NonNull CartItemAdapter.ViewHolder holder, int position) {
+        CartListItemModel currentItem = listitems.get(position);
         holder.textViewItem.setText(currentItem.getItemname());
+        String amountformatter = String.format("%,d", currentItem.getItemamount());
+        holder.amountViewItem.setText("จำนวน: " + amountformatter + " ชิ้น");
         String priceformatter = String.format("%,.2f", currentItem.getItemprice());
         holder.priceViewItem.setText("ราคา: " + priceformatter + " บาท");
         String imgUrl = baseURL + currentItem.getItemimage();
-
-        int starReview = currentItem.getItempopular();
-        if(starReview >= 1) holder.star1VewItem.setVisibility(View.VISIBLE);
-        if(starReview >= 2) holder.star2VewItem.setVisibility(View.VISIBLE);
-        if(starReview >= 3) holder.star3VewItem.setVisibility(View.VISIBLE);
-        if(starReview >= 4) holder.star4VewItem.setVisibility(View.VISIBLE);
-        if(starReview >= 5) holder.star5VewItem.setVisibility(View.VISIBLE);
 
         holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +57,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 FragmentManager manager = activity.getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.navHostFragment, ItemInfoFragment.newInstance(currentItem.getItemid(), null));
+                transaction.replace(R.id.navHostFragment, CartItemInfoFragment.newInstance(currentItem.getItemid(), null));
                 transaction.commit();
             }
         });
@@ -84,25 +81,16 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
         ImageView imageViewItem;
         TextView textViewItem;
         TextView priceViewItem;
+        TextView amountViewItem;
         CardView cardViewItem;
-        ImageView star1VewItem;
-        ImageView star2VewItem;
-        ImageView star3VewItem;
-        ImageView star4VewItem;
-        ImageView star5VewItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewItem = itemView.findViewById(R.id.imageItem);
             textViewItem = itemView.findViewById(R.id.textName);
-            priceViewItem = itemView.findViewById(R.id.textAmount);
+            amountViewItem = itemView.findViewById(R.id.textAmount);
+            priceViewItem = itemView.findViewById(R.id.textTotalPrice);
             cardViewItem = itemView.findViewById(R.id.cardviewlist);
-
-            star1VewItem = itemView.findViewById(R.id.star1);
-            star2VewItem = itemView.findViewById(R.id.star2);
-            star3VewItem = itemView.findViewById(R.id.star3);
-            star4VewItem = itemView.findViewById(R.id.star4);
-            star5VewItem = itemView.findViewById(R.id.star5);
         }
     }
 }

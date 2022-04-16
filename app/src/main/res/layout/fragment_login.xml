@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <EditText
-            android:id="@+id/InputUsername"
+            android:id="@+id/inputamountitem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_input"
@@ -69,7 +69,7 @@
             android:drawablePadding="10dp"
             android:ems="12"
             android:fontFamily="@font/kanit"
-            android:hint="ชื่อผู้ใช้"
+            android:hint="ชื่อผู้ใช้ หรือ อีเมล"
             android:inputType="textPersonName"
             android:minHeight="50dp"
             android:paddingStart="15dp"
@@ -97,10 +97,10 @@
             android:inputType="textPassword"
             android:minHeight="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/InputUsername"
+            app:layout_constraintEnd_toEndOf="@+id/inputamountitem"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/InputUsername"
-            app:layout_constraintTop_toBottomOf="@+id/InputUsername"
+            app:layout_constraintStart_toStartOf="@+id/inputamountitem"
+            app:layout_constraintTop_toBottomOf="@+id/inputamountitem"
             app:layout_constraintVertical_bias="0.075" />
 
         <ImageButton
@@ -112,10 +112,10 @@
             android:src="@drawable/buttonlogin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.164"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/InputPassword"
-            app:layout_constraintVertical_bias="0.155" />
+            app:layout_constraintVertical_bias="0.147" />
 
         <ImageButton
             android:id="@+id/registerButton"
@@ -123,13 +123,26 @@
             android:layout_height="54dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/register4"
+            android:src="@drawable/buttonregister"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.835"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/loginButton"
+            app:layout_constraintStart_toStartOf="@+id/loginButton"
             app:layout_constraintTop_toBottomOf="@+id/InputPassword"
-            app:layout_constraintVertical_bias="0.151" />
+            app:layout_constraintVertical_bias="0.54" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit"
+            android:text="คุณยังไม่มีบัญชีใช่หรือไม่?"
+            android:textColor="#2E2E2E"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/registerButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton"
+            app:layout_constraintVertical_bias="1.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

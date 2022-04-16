@@ -13,6 +13,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
+        android:background="@color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="7dp"
         app:contentPadding="15dp"
@@ -50,7 +51,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageItem" />
 
             <TextView
-                android:id="@+id/textDetail"
+                android:id="@+id/textAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -73,7 +74,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/star2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDetail"
+                app:layout_constraintTop_toBottomOf="@+id/textAmount"
                 app:layout_constraintVertical_bias="0.6"
                 app:srcCompat="@android:drawable/btn_star_big_on" />
 
@@ -86,7 +87,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/star3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDetail"
+                app:layout_constraintTop_toBottomOf="@+id/textAmount"
                 app:layout_constraintVertical_bias="0.6"
                 app:srcCompat="@android:drawable/btn_star_big_on" />
 
@@ -99,7 +100,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/star4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDetail"
+                app:layout_constraintTop_toBottomOf="@+id/textAmount"
                 app:layout_constraintVertical_bias="0.6"
                 app:srcCompat="@android:drawable/btn_star_big_on" />
 
@@ -112,7 +113,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/star5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDetail"
+                app:layout_constraintTop_toBottomOf="@+id/textAmount"
                 app:layout_constraintVertical_bias="0.6"
                 app:srcCompat="@android:drawable/btn_star_big_on" />
 
@@ -125,7 +126,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.785"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDetail"
+                app:layout_constraintTop_toBottomOf="@+id/textAmount"
                 app:layout_constraintVertical_bias="0.6"
                 app:srcCompat="@android:drawable/btn_star_big_on" />
 
