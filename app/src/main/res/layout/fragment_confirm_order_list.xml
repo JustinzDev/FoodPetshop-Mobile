@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserCartFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ConfirmOrderListFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -32,26 +32,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.023"></ImageButton>
 
-        <TextView
-            android:id="@+id/totalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ยอดรวม: ฿0"
-            android:fontFamily="@font/kanit"
-            android:textAlignment="center"
-            android:textSize="30dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_confirmorderlist"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.147" />
+            app:layout_constraintVertical_bias="0.383" />
 
         <TextView
             android:id="@+id/textTitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ตะกร้าสินค้า"
+            android:text="ยืนยันการสั่งซื้อ"
             android:fontFamily="@font/kanit"
             android:textAlignment="center"
             android:textSize="30dp"
@@ -62,29 +58,32 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.023" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_cartlistitem"
-            android:layout_width="match_parent"
-            android:layout_height="480dp"
-            android:layout_marginTop="20dp"
+        <TextView
+            android:id="@+id/textTotalPrice2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit"
+            android:text="รวมราคาทั้งหมด ฿1,000"
+            android:textAlignment="center"
+            android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/totalPrice"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.832" />
 
         <ImageButton
-            android:id="@+id/confirmOrderButton"
+            android:id="@+id/paymentButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/confirmorder"
+            android:src="@drawable/payment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_cartlistitem" />
+            app:layout_constraintTop_toBottomOf="@+id/textTotalPrice2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

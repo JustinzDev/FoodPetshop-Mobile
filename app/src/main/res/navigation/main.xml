@@ -40,4 +40,9 @@
         android:name="th.ac.kmutnb.foodpetshop.CartItemInfoFragment"
         android:label="fragment_cart_item_info"
         tools:layout="@layout/fragment_cart_item_info" />
+    <fragment
+        android:id="@+id/confirmOrderListFragment"
+        android:name="th.ac.kmutnb.foodpetshop.ConfirmOrderListFragment"
+        android:label="fragment_confirm_order_list"
+        tools:layout="@layout/fragment_confirm_order_list" />
 </navigation>

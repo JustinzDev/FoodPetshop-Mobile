@@ -1,7 +1,9 @@
 package th.ac.kmutnb.foodpetshop;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -50,6 +52,8 @@ public class CartItemInfoFragment extends Fragment {
 
     private View view;
 
+    private String userID;
+
     private String itemid;
     private String itemname;
     private int itemamount;
@@ -59,8 +63,7 @@ public class CartItemInfoFragment extends Fragment {
     private String itemimg;
     private String itemcategory;
 
-    public CartItemInfoFragment() {
-    }
+    public CartItemInfoFragment() { }
 
     public static CartItemInfoFragment newInstance(String param1, String param2) {
         CartItemInfoFragment fragment = new CartItemInfoFragment();
@@ -98,8 +101,10 @@ public class CartItemInfoFragment extends Fragment {
         backbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent itnHome = new Intent(getActivity(), MainActivity.class);
-                startActivity(itnHome);
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(userID, null));
+                transaction.commit();
             }
         });
 
@@ -118,14 +123,29 @@ public class CartItemInfoFragment extends Fragment {
                     Toast.makeText(getActivity(),"คุณจำเป็นต้องกรอกจำนวนที่ต้องการจะซื้อ", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    int itemamountEx = Integer.valueOf(input_amount);
-                    addItemCart(itemamountEx);
+                    AlertDialog.Builder builder =
+                            new AlertDialog.Builder(getContext());
+                    builder.setMessage("คุณต้องการที่จะลบสินค้า '" + itemname + "' ออกจากตะกร้าสินค้าของคุณหรือไม่?");
+                    builder.setPositiveButton("ลบ", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            deleteItemCart("http://192.168.0.105:4990/api/users/deleteitemcard");
+                        }
+                    });
+                    builder.setNegativeButton("ไม่เลย", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Not Event
+                        }
+                    });
+                    builder.show();
+
+                    Log.i(TAG, "Delete");
                 }
             }
         });
 
-        ImageButton buyitem = view.findViewById(R.id.buybutton);
-        buyitem.setOnClickListener(new View.OnClickListener() {
+        ImageButton editItem = view.findViewById(R.id.buybutton);
+        editItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 EditText inputamount = view.findViewById(R.id.inputamountitem);
@@ -134,47 +154,49 @@ public class CartItemInfoFragment extends Fragment {
                     Toast.makeText(getActivity(),"คุณจำเป็นต้องกรอกจำนวนที่ต้องการจะซื้อ", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    int amount = Integer.valueOf(input_amount);
+                    int itemamountEx = Integer.valueOf(input_amount);
+                    if(itemamountEx > itemamountStorage){
+                        Toast.makeText(getActivity(),"สินค้าในคลังมีไม่เพียงพอกับจำนวนที่คุณต้องการ!", Toast.LENGTH_SHORT).show();
+                    }
+                    else updateItemAPI("http://192.168.0.105:4990/api/users/updateitemcard", itemamountEx);
                 }
             }
         });
     }
 
-    public void addItemCart(int amount){
+    public void deleteItemCart(String url){
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading..");
         pDialog.show();
 
-        String url = "http://192.168.0.105:4990/api/users/additemcart";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.i(TAG, response);
+
                         String type = null;
+                        String message = null;
 
                         try {
                             JSONObject jsonobject = new JSONObject(response);
                             type = jsonobject.getString("type");
+                            message = jsonobject.getString("message");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        if(type.matches("item_exist")){
-                            Toast.makeText(getActivity(),"รายการสินค้านี้อยู้ในตะกร้าของคุณอยู่แล้ว!", Toast.LENGTH_SHORT).show();
-                        } else if(type.matches("success")){
-                            pDialog.setMessage("สินค้าได้ถูกเพิ่มไปยังตะกร้าสินค้าของคุณเรียบร้อยแล้ว!");
-                            new CountDownTimer(3000, 1000) {
-                                public void onTick(long millisUntilFinished) { }
-                                public void onFinish() {
-                                    pDialog.hide();
-                                    FragmentManager manager = getFragmentManager();
-                                    FragmentTransaction transaction = manager.beginTransaction();
-                                    transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(null, null));
-                                    transaction.commit();
-                                }
-                            }.start();
-                        }
+                        pDialog.setMessage(message);
+                        new CountDownTimer(3000, 1000) {
+                            public void onTick(long millisUntilFinished) { }
+                            public void onFinish() {
+                                pDialog.hide();
+                                FragmentManager manager = getFragmentManager();
+                                FragmentTransaction transaction = manager.beginTransaction();
+                                transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(userID, null));
+                                transaction.commit();
+                            }
+                        }.start();
                     }
                 },
 
@@ -192,8 +214,67 @@ public class CartItemInfoFragment extends Fragment {
             @Override
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("_id", mParam1);
+                return params;
+            }
+        };
 
-                Log.i(TAG, "Object: " + params);
+        mQueue = Volley.newRequestQueue(getActivity());
+        mQueue.add(stringRequest);
+    }
+
+    public void updateItemAPI(String url, int amount){
+        pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Loading..");
+        pDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i(TAG, response);
+
+                        String type = null;
+                        String message = null;
+
+                        try {
+                            JSONObject jsonobject = new JSONObject(response);
+                            type = jsonobject.getString("type");
+                            message = jsonobject.getString("message");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        pDialog.setMessage(message);
+                        new CountDownTimer(3000, 1000) {
+                            public void onTick(long millisUntilFinished) { }
+                            public void onFinish() {
+                                pDialog.hide();
+                                FragmentManager manager = getFragmentManager();
+                                FragmentTransaction transaction = manager.beginTransaction();
+                                transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(userID, null));
+                                transaction.commit();
+                            }
+                        }.start();
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Error handling
+                        Log.i(TAG, "onErrorResponse(): "+
+                                error.getMessage());
+
+                        pDialog.hide();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("_id", mParam1);
+                params.put("itemamount", String.valueOf(amount));
                 return params;
             }
         };
@@ -351,6 +432,7 @@ public class CartItemInfoFragment extends Fragment {
                             JSONObject jsonobject = new JSONObject(response);
                             type = jsonobject.getString("type");
                             userName = jsonobject.getString("username");
+                            userID = jsonobject.getString("_id");
 
                         } catch (JSONException e) {
                             e.printStackTrace();

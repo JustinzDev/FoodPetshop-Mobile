@@ -32,7 +32,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class UserCartFragment extends Fragment {
+public class ConfirmOrderListFragment extends Fragment {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -47,17 +48,15 @@ public class UserCartFragment extends Fragment {
     private RequestQueue mQueue;
 
     private RecyclerView recyclerViewListitem;
-    private CartItemAdapter listitemAdapter;
+    private ConfirmOrderListAdapter listitemAdapter;
     private ArrayList<CartListItemModel> listitem = new ArrayList<>();
 
     private double totalpriceitemall = 0;
 
-    public UserCartFragment() {
-        // Required empty public constructor
-    }
+    public ConfirmOrderListFragment() { }
 
-    public static UserCartFragment newInstance(String param1, String param2) {
-        UserCartFragment fragment = new UserCartFragment();
+    public static ConfirmOrderListFragment newInstance(String param1, String param2) {
+        ConfirmOrderListFragment fragment = new ConfirmOrderListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,37 +76,25 @@ public class UserCartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_user_cart, container, false);
+        view = inflater.inflate(R.layout.fragment_confirm_order_list, container, false);
         return view;
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-
-        Log.i(TAG, mParam1);
-        getItems("http://192.168.0.105:4990/api/users/cartitems/" + mParam1);
-
         ImageButton backbutton = view.findViewById(R.id.imagebuttonbackcart);
         backbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent itnHome = new Intent(getActivity(), MainActivity.class);
-                startActivity(itnHome);
-            }
-        });
-
-        ImageButton confirmOrderButton = view.findViewById(R.id.confirmOrderButton);
-        confirmOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.navHostFragment, ConfirmOrderListFragment.newInstance(mParam1, null));
+                transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(mParam1, null));
                 transaction.commit();
             }
         });
+
+        getItems("http://192.168.0.105:4990/api/users/cartitems/" + mParam1);
     }
 
     public void getItems(String url){
@@ -130,7 +117,6 @@ public class UserCartFragment extends Fragment {
                                 CartListItemModel dataitem = gson.fromJson(String.valueOf(jsObj), CartListItemModel.class);
                                 listitem.add(dataitem);
                                 totalpriceitemall += dataitem.getItemprice();
-//                                Log.d(TAG,"cart "+ dataitem.getItemname());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -158,14 +144,13 @@ public class UserCartFragment extends Fragment {
     }
 
     public void displayListview(double totalpriceitemall){
-
-        TextView totalpricetxt = view.findViewById(R.id.totalPrice);
+        TextView totalPrice = view.findViewById(R.id.textTotalPrice2);
         String totalpriceallformatter = String.format("%,.2f", totalpriceitemall);
-        totalpricetxt.setText("ยอดรวม: ฿" + totalpriceallformatter);
+        totalPrice.setText("ราคารวมทั้งหมด: ฿" + totalpriceallformatter);
 
-        recyclerViewListitem = (RecyclerView) getView().findViewById(R.id.rv_cartlistitem);
-        listitemAdapter = new CartItemAdapter(listitem);
-        recyclerViewListitem.setLayoutManager(new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false));
+        recyclerViewListitem = (RecyclerView) getView().findViewById(R.id.rv_confirmorderlist);
+        listitemAdapter = new ConfirmOrderListAdapter(listitem);
+        recyclerViewListitem.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerViewListitem.setAdapter(listitemAdapter);
     }
 }

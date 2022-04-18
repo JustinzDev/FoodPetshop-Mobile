@@ -178,7 +178,7 @@ public class ItemInfoFragment extends Fragment {
                                     pDialog.hide();
                                     FragmentManager manager = getFragmentManager();
                                     FragmentTransaction transaction = manager.beginTransaction();
-                                    transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(null, null));
+                                    transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(userID, null));
                                     transaction.commit();
                                 }
                             }.start();
