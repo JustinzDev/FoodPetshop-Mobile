@@ -425,20 +425,22 @@ public class CartItemInfoFragment extends Fragment {
                     public void onResponse(String response) {
                         Log.i(TAG, response);
 
-                        String type = null;
                         String userName = null;
+                        String userEmail = null;
+                        String userPhone = null;
 
                         try {
                             JSONObject jsonobject = new JSONObject(response);
-                            type = jsonobject.getString("type");
                             userName = jsonobject.getString("username");
+                            userEmail = jsonobject.getString("email");
+                            userPhone = jsonobject.getString("phone");
                             userID = jsonobject.getString("_id");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        if(type.matches("success") && userName != null){
+                        if(userName != null && userEmail != null && userPhone != null){
                             EditText inputAmount = view.findViewById(R.id.inputamountitem);
                             inputAmount.setVisibility(View.VISIBLE);
 
@@ -447,7 +449,7 @@ public class CartItemInfoFragment extends Fragment {
 
                             ImageButton addcart = view.findViewById(R.id.buybutton2);
                             addcart.setVisibility(View.VISIBLE);
-                        } else if(type.matches("exp")){
+                        } else{
                             SharedPreferences preferences = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                             preferences.edit().remove("Token").commit();
                         }

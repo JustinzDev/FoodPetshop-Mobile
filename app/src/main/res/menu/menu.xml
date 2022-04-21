@@ -9,6 +9,16 @@
         android:title="เข้าสู่ระบบ/ลงทะเบียน" />
 
     <item
+        android:id="@+id/myOrdersFragment"
+        android:title="รายการของฉัน"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/editProfileFragment"
+        android:title="แก้ไขโปรไฟsล์"
+        android:visible="false" />
+
+    <item
         android:id="@+id/logout"
         android:title="ออกจากระบบ"
         android:visible="false" />

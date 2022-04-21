@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".EditProfileFragment">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/back_2" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/imagebuttonbackcart"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/backbutton"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.044"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.023" />
+
+                <TextView
+                    android:id="@+id/textTitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kanit"
+                    android:text="แก้ไขโปรไฟล์ส่วนตัว"
+                    android:textAlignment="center"
+                    android:textSize="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.023" />
+
+                <EditText
+                    android:id="@+id/inputUsername"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="160dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="ชื่อผู้ใช้งาน"
+                    android:inputType="text"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/inputEmail"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="อีเมล"
+                    android:inputType="text"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="@+id/inputUsername"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/inputUsername"
+                    app:layout_constraintTop_toBottomOf="@+id/inputUsername" />
+
+                <EditText
+                    android:id="@+id/inputPhone"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="เบอร์โทรศัพท์"
+                    android:inputType="text"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="@+id/inputEmail"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/inputEmail"
+                    app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+
+                <EditText
+                    android:id="@+id/inputFristname"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="ชื่อจริง"
+                    android:inputType="text"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="@+id/inputPhone"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/inputPhone"
+                    app:layout_constraintTop_toBottomOf="@+id/inputPhone" />
+
+                <EditText
+                    android:id="@+id/inputLastname"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="นามสกุล"
+                    android:inputType="text"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="@+id/inputFristname"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/inputFristname"
+                    app:layout_constraintTop_toBottomOf="@+id/inputFristname" />
+
+                <ImageButton
+                    android:id="@+id/confirmProfileButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/confirmprofile"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inputaddress"
+                    app:layout_constraintVertical_bias="0.035" />
+
+                <EditText
+                    android:id="@+id/inputaddress"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:fontFamily="@font/kanit"
+                    android:gravity="start|top"
+                    android:hint="ระบุที่อยู่ของคุณ"
+                    android:inputType="textMultiLine"
+                    android:minHeight="50dp"
+                    android:padding="17dp"
+                    app:layout_constraintEnd_toEndOf="@+id/inputLastname"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/inputLastname"
+                    app:layout_constraintTop_toBottomOf="@+id/inputLastname" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+    </ScrollView>
+</FrameLayout>

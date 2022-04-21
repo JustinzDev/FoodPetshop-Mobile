@@ -1,7 +1,6 @@
 package th.ac.kmutnb.foodpetshop;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -90,6 +89,17 @@ public class ConfirmOrderListFragment extends Fragment {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(mParam1, null));
+                transaction.commit();
+            }
+        });
+
+        ImageButton paymentButton = view.findViewById(R.id.confirmProfileButton);
+        paymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.navHostFragment, PaymentFragment.newInstance(mParam1, null));
                 transaction.commit();
             }
         });

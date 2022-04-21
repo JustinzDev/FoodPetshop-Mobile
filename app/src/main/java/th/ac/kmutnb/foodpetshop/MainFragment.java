@@ -140,19 +140,21 @@ public class MainFragment extends Fragment {
                     public void onResponse(String response) {
                         Log.i(TAG, response);
 
-                        String type = null;
                         String userName = null;
+                        String userEmail = null;
+                        String userPhone = null;
 
                         try {
                             JSONObject jsonobject = new JSONObject(response);
-                            type = jsonobject.getString("type");
                             userName = jsonobject.getString("username");
+                            userEmail = jsonobject.getString("email");
+                            userPhone = jsonobject.getString("phone");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        if(type.matches("success") && userName != null){
+                        if(userName != null && userEmail != null && userPhone != null){
                             TextView tvUsername = getActivity().findViewById(R.id.txt_Username);
                             tvUsername.setText(userName);
 
@@ -166,7 +168,9 @@ public class MainFragment extends Fragment {
                             Menu nav_Menu = navigationView.getMenu();
                             nav_Menu.findItem(R.id.logout).setVisible(true);
                             nav_Menu.findItem(R.id.loginFragment).setVisible(false);
-                        } else if(type.matches("exp")){
+                            nav_Menu.findItem(R.id.myOrdersFragment).setVisible(true);
+                            nav_Menu.findItem(R.id.editProfileFragment).setVisible(true);
+                        } else{
                             SharedPreferences preferences = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                             preferences.edit().remove("Token").commit();
                         }

@@ -131,21 +131,6 @@ public class ItemInfoFragment extends Fragment {
                 }
             }
         });
-
-        ImageButton buyitem = view.findViewById(R.id.buybutton);
-        buyitem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                EditText inputamount = view.findViewById(R.id.inputamountitem);
-                String input_amount = inputamount.getText().toString();
-                if(input_amount.isEmpty()){
-                    Toast.makeText(getActivity(),"คุณจำเป็นต้องกรอกจำนวนที่ต้องการจะซื้อ", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    int amount = Integer.valueOf(input_amount);
-                }
-            }
-        });
     }
 
     public void addItemCart(int amount){
@@ -343,28 +328,28 @@ public class ItemInfoFragment extends Fragment {
                     public void onResponse(String response) {
                         Log.i(TAG, response);
 
-                        String type = null;
                         String userName = null;
+                        String userEmail = null;
+                        String userPhone = null;
+
                         try {
                             JSONObject jsonobject = new JSONObject(response);
-                            type = jsonobject.getString("type");
                             userName = jsonobject.getString("username");
+                            userEmail = jsonobject.getString("email");
+                            userPhone = jsonobject.getString("phone");
                             userID = jsonobject.getString("_id");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        if(type.matches("success") && userName != null){
+                        if(userName != null && userEmail != null && userPhone != null){
                             EditText inputAmount = view.findViewById(R.id.inputamountitem);
                             inputAmount.setVisibility(View.VISIBLE);
 
-                            ImageButton buyitem = view.findViewById(R.id.buybutton);
-                            buyitem.setVisibility(View.VISIBLE);
-
                             ImageButton addcart = view.findViewById(R.id.buybutton2);
                             addcart.setVisibility(View.VISIBLE);
-                        } else if(type.matches("exp")){
+                        } else {
                             SharedPreferences preferences = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                             preferences.edit().remove("Token").commit();
                         }

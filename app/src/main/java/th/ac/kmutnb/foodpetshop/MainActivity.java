@@ -123,13 +123,11 @@ public class MainActivity extends AppCompatActivity{
                     public void onResponse(String response) {
                         Log.i(TAG, response);
 
-                        String type = null;
                         String userName = null;
                         String userID = null;
 
                         try {
                             JSONObject jsonobject = new JSONObject(response);
-                            type = jsonobject.getString("type");
                             userID = jsonobject.getString("_id");
                             userName = jsonobject.getString("username");
 
@@ -137,13 +135,13 @@ public class MainActivity extends AppCompatActivity{
                             e.printStackTrace();
                         }
 
-                        if(type.matches("success") && userName != null){
+                        if(userName != null && userID != null){
                             AppCompatActivity activity = (AppCompatActivity) view.getContext();
                             FragmentManager manager = activity.getSupportFragmentManager();
                             FragmentTransaction transaction = manager.beginTransaction();
                             transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(userID, null));
                             transaction.commit();
-                        } else if(type.matches("exp")){
+                        } else {
                             SharedPreferences preferences = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                             preferences.edit().remove("Token").commit();
                         }

@@ -47,18 +47,18 @@ public class ConfirmOrderListAdapter extends RecyclerView.Adapter<ConfirmOrderLi
         holder.priceViewItem.setText("รวม: " + priceformatter + " บาท");
         String imgUrl = baseURL + currentItem.getItemimage();
 
-        holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, currentItem.getItemid());
-
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                FragmentManager manager = activity.getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.navHostFragment, CartItemInfoFragment.newInstance(currentItem.getItemid(), null));
-                transaction.commit();
-            }
-        });
+//        holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d(TAG, currentItem.getItemid());
+//
+//                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                FragmentManager manager = activity.getSupportFragmentManager();
+//                FragmentTransaction transaction = manager.beginTransaction();
+//                transaction.replace(R.id.navHostFragment, CartItemInfoFragment.newInstance(currentItem.getItemid(), null));
+//                transaction.commit();
+//            }
+//        });
 
         Picasso.get()
                 .load(imgUrl)

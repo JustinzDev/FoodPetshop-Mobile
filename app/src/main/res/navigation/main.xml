@@ -45,4 +45,24 @@
         android:name="th.ac.kmutnb.foodpetshop.ConfirmOrderListFragment"
         android:label="fragment_confirm_order_list"
         tools:layout="@layout/fragment_confirm_order_list" />
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="th.ac.kmutnb.foodpetshop.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" />
+    <fragment
+        android:id="@+id/completeOrderFragment"
+        android:name="th.ac.kmutnb.foodpetshop.CompleteOrderFragment"
+        android:label="fragment_complete_order"
+        tools:layout="@layout/fragment_complete_order" />
+    <fragment
+        android:id="@+id/myOrdersFragment"
+        android:name="th.ac.kmutnb.foodpetshop.MyOrdersFragment"
+        android:label="fragment_my_orders"
+        tools:layout="@layout/fragment_my_orders" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="th.ac.kmutnb.foodpetshop.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 </navigation>
