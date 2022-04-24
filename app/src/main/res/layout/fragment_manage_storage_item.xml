@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ManageStorageItemFragment">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/back_2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/kanit"
+            android:text="จัดการสินค้า"
+            android:textColor="@color/dark_grey"
+            app:backgroundTint="@color/myyellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.023" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit"
+            android:text="จัดการรายการ"
+            android:textColor="@color/dark_grey"
+            app:backgroundTint="@color/myyellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.066"
+            app:layout_constraintStart_toEndOf="@+id/button1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.023" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit"
+            android:text="เพิ่มสินค้า"
+            app:backgroundTint="@color/myyellow"
+            android:textColor="@color/dark_grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.023" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="1000dp">
+
+                <ImageView
+                    android:id="@+id/stroageItemImg"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/product1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.496"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.029" />
+
+                <EditText
+                    android:id="@+id/storageItemName"
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="48dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="ชื่อสินค้า"
+                    android:inputType="text"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.454"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/stroageItemImg"
+                    app:layout_constraintVertical_bias="0.075" />
+
+                <EditText
+                    android:id="@+id/storageItemAmount"
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="48dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="จำนวนสินค้า"
+                    android:inputType="number"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/storageItemName"
+                    app:layout_constraintHorizontal_bias="0.454"
+                    app:layout_constraintStart_toStartOf="@+id/storageItemName"
+                    app:layout_constraintTop_toBottomOf="@+id/storageItemName"
+                    app:layout_constraintVertical_bias="0.049" />
+
+                <EditText
+                    android:id="@+id/storageItemPrice"
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="48dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="ราคาสินค้า"
+                    android:inputType="numberDecimal"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/storageItemAmount"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/storageItemAmount"
+                    app:layout_constraintTop_toBottomOf="@+id/storageItemAmount"
+                    app:layout_constraintVertical_bias="0.062" />
+
+                <EditText
+                    android:id="@+id/storageItemCategory"
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="48dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="12"
+                    android:fontFamily="@font/kanit"
+                    android:hint="ประเภทสินค้า"
+                    android:inputType="text"
+                    android:minHeight="50dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text=""
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/storageItemPrice"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/storageItemPrice"
+                    app:layout_constraintTop_toBottomOf="@+id/storageItemPrice"
+                    app:layout_constraintVertical_bias="0.09"
+                    tools:ignore="DuplicateClickableBoundsCheck,DuplicateClickableBoundsCheck,DuplicateClickableBoundsCheck,DuplicateClickableBoundsCheck" />
+
+                <EditText
+                    android:id="@+id/storageItemDetail"
+                    android:layout_width="400dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_input"
+                    android:drawablePadding="10dp"
+                    android:ems="10"
+                    android:fontFamily="@font/kanit"
+                    android:gravity="start|top"
+                    android:hint="รายละเอียดสินค้า"
+                    android:inputType="textMultiLine"
+                    android:minHeight="50dp"
+                    android:padding="17dp"
+                    app:layout_constraintEnd_toEndOf="@+id/storageItemCategory"
+                    app:layout_constraintStart_toStartOf="@+id/storageItemCategory"
+                    app:layout_constraintTop_toBottomOf="@+id/storageItemCategory" />
+
+                <Button
+                    android:id="@+id/buttonEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kanit"
+                    android:text="ยืนยันการแก้ไข"
+                    android:textSize="18dp"
+                    android:textColor="@color/dark_grey"
+                    app:backgroundTint="@color/myyellow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/storageItemDetail"
+                    app:layout_constraintVertical_bias="0.203" />
+
+                <Button
+                    android:id="@+id/buttonDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kanit"
+                    android:text="ลบออกจากคลัง"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="18dp"
+                    app:backgroundTint="@color/myred"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/storageItemDetail"
+                    app:layout_constraintVertical_bias="0.674" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

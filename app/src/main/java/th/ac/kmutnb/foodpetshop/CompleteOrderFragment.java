@@ -1,6 +1,7 @@
 package th.ac.kmutnb.foodpetshop;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -46,9 +48,11 @@ public class CompleteOrderFragment extends Fragment {
 
     private View view;
 
-    CartListItemModel dataitem;
-
     private String KeyOrder = null;
+
+    private double totalpriceallitem = 0.00;
+    private int coutingitem = 0;
+    private String itemImgPreview = null;
 
     private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
 
@@ -87,6 +91,11 @@ public class CompleteOrderFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_complete_order, container, false);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -96,7 +105,19 @@ public class CompleteOrderFragment extends Fragment {
 
         getItems("http://192.168.0.105:4990/api/users/cartitems/" + mParam1);
 
-        KeyOrder = getRandomString(10);
+        ImageButton nextmyorder = view.findViewById(R.id.confirmProfileButton);
+        nextmyorder.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.navHostFragment, MyOrdersFragment.newInstance(null, null));
+                transaction.commit();
+            }
+        });
+
+
+        KeyOrder = getRandomString(6);
     }
 
     public void getItems(String url){
@@ -113,6 +134,8 @@ public class CompleteOrderFragment extends Fragment {
                         JSONObject jsObj;   // = null;
 
                         String cartID;
+                        String itemName;
+                        String itemImg;
                         String itemOwnerID;
                         String itemID;
                         int itemAmount;
@@ -125,11 +148,18 @@ public class CompleteOrderFragment extends Fragment {
                                 itemID = jsObj.getString("itemid");
                                 itemAmount = jsObj.getInt("itemamount");
                                 itemTotalPrice = jsObj.getDouble("itemtotalprice");
-                                createOrderItem("http://192.168.0.105:4990/api/users/createorderitem", cartID, itemOwnerID, itemID, itemAmount, itemTotalPrice);
+                                itemName = jsObj.getString("itemname");
+                                itemImg = jsObj.getString("itemimg");
+                                totalpriceallitem += itemTotalPrice;
+                                coutingitem++;
+                                if(itemImgPreview == null) itemImgPreview = itemImg;
+                                createOrderItem("http://192.168.0.105:4990/api/users/createorderitem", cartID, itemName, itemOwnerID, itemID, itemAmount, itemTotalPrice, itemImg);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
+
+                        createKeyItem("http://192.168.0.105:4990/api/users/createkeyorderlist");
 
                         pDialog.hide();
                     }
@@ -148,21 +178,23 @@ public class CompleteOrderFragment extends Fragment {
         mQueue.add(jsRequest);
     }
 
-    public void createOrderItem(String url, String cartID, String itemOwnerID, String itemID, int itemAmount, double itemTotalPrice){
+    public void createOrderItem(String url, String cartID, String itemName, String itemOwnerID, String itemID, int itemAmount, double itemTotalPrice, String itemImg){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.i(TAG, response);
-
+                        String type = null;
                         try {
                             JSONObject jsonobject = new JSONObject(response);
-
-
+                            type = jsonobject.getString("type");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
+                        if(type.matches("success")){
+                            Log.i(TAG, "createItemSuccess");
+                        }
                     }
                 },
 
@@ -179,12 +211,60 @@ public class CompleteOrderFragment extends Fragment {
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("carid", cartID);
+                params.put("itemname", itemName);
                 params.put("itemownerid", itemOwnerID);
                 params.put("itemid", itemID);
                 params.put("itemamount", String.valueOf(itemAmount));
                 params.put("itemtotalprice", String.valueOf(itemTotalPrice));
-                params.put("itemgroup", KeyOrder);
+                params.put("itemkey", KeyOrder);
+                params.put("itemimg", itemImg);
+                return params;
+            }
+        };
+
+        mQueue = Volley.newRequestQueue(getActivity());
+        mQueue.add(stringRequest);
+    }
+
+    public void createKeyItem(String url){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i(TAG, response);
+                        String type = null;
+                        try {
+                            JSONObject jsonobject = new JSONObject(response);
+                            type = jsonobject.getString("type");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(type.matches("success")){
+
+                        }
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Error handling
+                        Log.i(TAG, "onErrorResponse(): "+
+                                error.getMessage());
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("itemownerid", mParam1);
+                params.put("itemkey", KeyOrder);
+                params.put("itemtotalprice", String.valueOf(totalpriceallitem));
                 params.put("itempayment", mParam2);
+                params.put("itemstate", "wait");
+                params.put("itemcount", String.valueOf(coutingitem));
+                params.put("itemimgpreview", itemImgPreview);
                 return params;
             }
         };

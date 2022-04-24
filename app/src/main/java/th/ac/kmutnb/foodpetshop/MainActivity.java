@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
         findViewById(R.id.slidemenu).setOnClickListener(new View.OnClickListener() {
@@ -147,7 +146,6 @@ public class MainActivity extends AppCompatActivity{
                         }
                     }
                 },
-
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

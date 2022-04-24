@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.MemoryPolicy;
@@ -16,32 +15,34 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ConfirmOrderListAdapter extends RecyclerView.Adapter<ConfirmOrderListAdapter.ViewHolder>{
+public class MyOrderInfoAdapter extends RecyclerView.Adapter<MyOrderInfoAdapter.ViewHolder>{
     private static final String TAG = "my_app";
-    private List<CartListItemModel> listitems;
+    private List<MyOrderInfoModel> listitems;
     private String baseURL = "http://154.202.2.5/foodpetshop/img/";
 
-    public ConfirmOrderListAdapter(List<CartListItemModel> listitems){
+    public MyOrderInfoAdapter(List<MyOrderInfoModel> listitems){
         this.listitems = listitems;
     }
 
     @NonNull
     @Override
-    public ConfirmOrderListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.static_rv_confirmorderlist, parent, false);
-        ConfirmOrderListAdapter.ViewHolder listitemViewHolder = new ConfirmOrderListAdapter.ViewHolder(view);
+    public MyOrderInfoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.static_rv_myorderinfolist, parent, false);
+        MyOrderInfoAdapter.ViewHolder listitemViewHolder = new MyOrderInfoAdapter.ViewHolder(view);
         return listitemViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ConfirmOrderListAdapter.ViewHolder holder, int position) {
-        CartListItemModel currentItem = listitems.get(position);
-        holder.textViewItem.setText(currentItem.getItemname());
+    public void onBindViewHolder(@NonNull MyOrderInfoAdapter.ViewHolder holder, int position) {
+        MyOrderInfoModel currentItem = listitems.get(position);
+        String itemName = currentItem.getItemname();
+        holder.itemName.setText(itemName);
         String amountformatter = String.format("%,d", currentItem.getItemamount());
-        holder.amountViewItem.setText("จำนวน: " + amountformatter + " ชิ้น");
-        String priceformatter = String.format("%,.2f", currentItem.getItemprice());
-        holder.priceViewItem.setText("รวม: " + priceformatter + " บาท");
-        String imgUrl = baseURL + currentItem.getItemimage();
+        holder.itemTotalAmount.setText("รวม: " + amountformatter + " ชิ้น");
+        String priceformatter = String.format("%,.2f", currentItem.getItemtotalprice());
+        holder.itemTotalPrice.setText("รวม: " + priceformatter + " บาท");
+
+        String imgUrl = baseURL + currentItem.getItemimg();
 
 //        holder.cardViewItem.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -62,7 +63,7 @@ public class ConfirmOrderListAdapter extends RecyclerView.Adapter<ConfirmOrderLi
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .placeholder(R.mipmap.ic_launcher).fit()
                 .error(R.mipmap.ic_launcher)
-                .into(holder.imageViewItem);
+                .into(holder.itemImg);
     }
 
     @Override
@@ -72,19 +73,17 @@ public class ConfirmOrderListAdapter extends RecyclerView.Adapter<ConfirmOrderLi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView imageViewItem;
-        TextView textViewItem;
-        TextView priceViewItem;
-        TextView amountViewItem;
-        CardView cardViewItem;
+        ImageView itemImg;
+        TextView itemName;
+        TextView itemTotalPrice;
+        TextView itemTotalAmount;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewItem = itemView.findViewById(R.id.imageItem);
-            textViewItem = itemView.findViewById(R.id.myorderitemName);
-            amountViewItem = itemView.findViewById(R.id.textAmount);
-            priceViewItem = itemView.findViewById(R.id.textPrice);
-            cardViewItem = itemView.findViewById(R.id.cardviewlist);
+            itemImg = itemView.findViewById(R.id.imageItem);
+            itemName = itemView.findViewById(R.id.myorderitemName);
+            itemTotalPrice = itemView.findViewById(R.id.totalprice);
+            itemTotalAmount = itemView.findViewById(R.id.countitem);
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -87,6 +88,11 @@ public class ItemInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_item_info, container, false);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -113,7 +119,7 @@ public class ItemInfoFragment extends Fragment {
         addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                EditText inputamount = view.findViewById(R.id.inputamountitem);
+                EditText inputamount = view.findViewById(R.id.storageItemName);
                 String input_amount = inputamount.getText().toString();
                 Log.i(TAG, input_amount);
                 if(input_amount.isEmpty()){
@@ -277,7 +283,7 @@ public class ItemInfoFragment extends Fragment {
         this.popular = popular;
 
         String baseURL = "http://154.202.2.5/foodpetshop/img/";
-        ImageView itemimg = view.findViewById(R.id.itemInfoImage2);
+        ImageView itemimg = view.findViewById(R.id.stroageItemImg);
         String imgUrl = baseURL + img;
         Picasso.get()
                 .load(imgUrl)
@@ -344,7 +350,7 @@ public class ItemInfoFragment extends Fragment {
                         }
 
                         if(userName != null && userEmail != null && userPhone != null){
-                            EditText inputAmount = view.findViewById(R.id.inputamountitem);
+                            EditText inputAmount = view.findViewById(R.id.storageItemName);
                             inputAmount.setVisibility(View.VISIBLE);
 
                             ImageButton addcart = view.findViewById(R.id.buybutton2);

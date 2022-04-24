@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -94,6 +95,11 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main, container, false);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -143,12 +149,14 @@ public class MainFragment extends Fragment {
                         String userName = null;
                         String userEmail = null;
                         String userPhone = null;
+                        boolean userAdmin = false;
 
                         try {
                             JSONObject jsonobject = new JSONObject(response);
                             userName = jsonobject.getString("username");
                             userEmail = jsonobject.getString("email");
                             userPhone = jsonobject.getString("phone");
+                            userAdmin = jsonobject.getBoolean("admin");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -170,9 +178,14 @@ public class MainFragment extends Fragment {
                             nav_Menu.findItem(R.id.loginFragment).setVisible(false);
                             nav_Menu.findItem(R.id.myOrdersFragment).setVisible(true);
                             nav_Menu.findItem(R.id.editProfileFragment).setVisible(true);
+                            if(userAdmin){
+                                nav_Menu.findItem(R.id.adminFragment).setVisible(true);
+                            }
                         } else{
                             SharedPreferences preferences = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                             preferences.edit().remove("Token").commit();
+                            Intent itnHome = new Intent(getActivity(), MainActivity.class);
+                            startActivity(itnHome);
                         }
                     }
                 },

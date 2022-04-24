@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -61,6 +62,11 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_register, container, false);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -83,7 +89,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                EditText username = view.findViewById(R.id.inputamountitem);
+                EditText username = view.findViewById(R.id.storageItemName);
                 EditText email = view.findViewById(R.id.InputEmail);
                 EditText phone = view.findViewById(R.id.InputPhone);
                 EditText password = view.findViewById(R.id.InputPassword);
@@ -143,12 +149,14 @@ public class RegisterFragment extends Fragment {
                 {
                     @Override
                     protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
+                        Map<String, String> params = new HashMap<>();
                         params.put("username", usernameText);
                         params.put("email", emailText);
                         params.put("telephone", phoneText);
                         params.put("password", passwordText);
                         params.put("confirmpassword", confirmpasswordText);
+                        params.put("address", String.valueOf("null"));
+                        params.put("admin", String.valueOf(false));
                         return params;
                     }
                 };

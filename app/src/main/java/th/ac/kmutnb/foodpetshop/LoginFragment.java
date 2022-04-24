@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -74,6 +75,11 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_login, container, false);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -99,7 +105,7 @@ public class LoginFragment extends Fragment {
                 pDialog.setMessage("Loading..");
                 pDialog.show();
 
-                EditText username = view.findViewById(R.id.inputamountitem);
+                EditText username = view.findViewById(R.id.storageItemName);
                 EditText password = view.findViewById(R.id.InputPassword);
                 String usernameText = username.getText().toString();
                 String passwordText = password.getText().toString();
@@ -137,6 +143,7 @@ public class LoginFragment extends Fragment {
                                     editor.putString("userID", userID);
                                     editor.commit();
                                     Log.i(TAG, userToken);
+                                    Log.i(TAG, "userID: " + userID);
 
                                     FragmentManager manager = getFragmentManager();
                                     FragmentTransaction transaction = manager.beginTransaction();

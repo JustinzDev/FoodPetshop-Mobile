@@ -5,6 +5,11 @@
         android:title="หน้าหลัก" />
 
     <item
+        android:id="@+id/adminFragment"
+        android:title="จัดการร้านค้า"
+        android:visible="false"/>
+
+    <item
         android:id="@+id/loginFragment"
         android:title="เข้าสู่ระบบ/ลงทะเบียน" />
 

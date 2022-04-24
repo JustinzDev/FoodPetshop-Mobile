@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".CompleteOrderFragment">
+    tools:context=".OrderFinishFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -21,7 +21,7 @@
             android:id="@+id/textTitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="การสั่งซื้อสินค้า"
+            android:text="การยืนยันสินค้า"
             android:fontFamily="@font/kanit"
             android:textAlignment="center"
             android:textSize="30dp"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/kanit"
-            android:text="คุณได้ทำการสั่งสินค้าสำเร็จ"
+            android:text="การยืนยันว่าได้รับสินค้าแล้ว"
             android:textAlignment="center"
             android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/kanit"
-            android:text="สามารถเช็ครายละเอียดได้ที่ เมนู รายการของฉัน"
+            android:text="คุณยืนยันว่าได้รับสินค้าเรียบร้อยแล้ว"
             android:textAlignment="center"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -61,6 +61,21 @@
             app:layout_constraintStart_toStartOf="@+id/imageView6"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.668" />
+
+        <TextView
+            android:id="@+id/textFinish3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit"
+            android:text="รอ 5 วินาทีระบบกำลังนำคุณออกจากหน้านี้..."
+            android:textAlignment="center"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/imageView6"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.737" />
 
         <ImageView
             android:id="@+id/imageView6"
@@ -73,21 +88,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTitle2"
             app:layout_constraintVertical_bias="0.258" />
-
-        <ImageButton
-            android:id="@+id/confirmProfileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/myorders"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textFinish2"
-            app:layout_constraintVertical_bias="0.279" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

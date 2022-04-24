@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -52,6 +53,8 @@ public class UserCartFragment extends Fragment {
 
     private double totalpriceitemall = 0;
 
+    private int coutingItem = 0;
+
     public UserCartFragment() {
         // Required empty public constructor
     }
@@ -79,6 +82,12 @@ public class UserCartFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_user_cart, container, false);
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -102,10 +111,12 @@ public class UserCartFragment extends Fragment {
         confirmOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.navHostFragment, ConfirmOrderListFragment.newInstance(mParam1, null));
-                transaction.commit();
+                if(coutingItem > 0){
+                    FragmentManager manager = getFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.navHostFragment, ConfirmOrderListFragment.newInstance(mParam1, null));
+                    transaction.commit();
+                }
             }
         });
     }
@@ -130,12 +141,12 @@ public class UserCartFragment extends Fragment {
                                 CartListItemModel dataitem = gson.fromJson(String.valueOf(jsObj), CartListItemModel.class);
                                 listitem.add(dataitem);
                                 totalpriceitemall += dataitem.getItemprice();
-//                                Log.d(TAG,"cart "+ dataitem.getItemname());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
 
+                        coutingItem = listitem.size();
                         if (listitem.size() > 0){
                             displayListview(totalpriceitemall);
                         }

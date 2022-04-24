@@ -1,12 +1,39 @@
 package th.ac.kmutnb.foodpetshop;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MyOrdersFragment extends Fragment {
 
@@ -17,6 +44,15 @@ public class MyOrdersFragment extends Fragment {
     private String mParam2;
 
     private View view;
+
+    public static final String REQUEST_TAG = "myrequest";
+    private static final String TAG = "my_app";
+    ProgressDialog pDialog;
+    private RequestQueue mQueue;
+
+    private RecyclerView recyclerViewListitem;
+    private MyOrderListAdapter listitemAdapter;
+    private ArrayList<MyOrderListModel> listitem = new ArrayList<>();
 
     public MyOrdersFragment() {
         // Required empty public constructor
@@ -45,6 +81,81 @@ public class MyOrdersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_my_orders, container, false);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        SharedPreferences sp = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
+        String userID = sp.getString("userID", "");
+
+        ImageButton backbutton = view.findViewById(R.id.imagebuttonbackcart);
+        backbutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent itnHome = new Intent(getActivity(), MainActivity.class);
+                startActivity(itnHome);
+            }
+        });
+
+        getMyOrderList("http://192.168.0.105:4990/api/users/myorderkeylist/" + userID);
+    }
+
+    public void getMyOrderList(String url){
+        pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Loading..");
+        pDialog.show();
+
+        listitem.clear();
+
+        JsonArrayRequest jsRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Gson gson = new Gson();
+                        Log.i(TAG, response.toString());
+                        JSONObject jsObj;   // = null;
+                        for (int i=0; i < response.length(); i++ ) {
+                            try {
+                                jsObj = response.getJSONObject(i);
+                                MyOrderListModel dataitem = gson.fromJson(String.valueOf(jsObj), MyOrderListModel.class);
+                                listitem.add(dataitem);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        if (listitem.size() > 0){
+                            displayListview();
+                        }
+
+                        pDialog.hide();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG,error.toString());
+                        Toast.makeText(getActivity(),error.toString(), Toast.LENGTH_SHORT).show();
+                        pDialog.hide();
+                    }
+                }); // Request
+
+        mQueue = Volley.newRequestQueue(getActivity());
+        jsRequest.setTag(REQUEST_TAG);
+        mQueue.add(jsRequest);
+    }
+
+    public void displayListview(){
+        recyclerViewListitem = (RecyclerView) getView().findViewById(R.id.rv_myorderlist);
+        listitemAdapter = new MyOrderListAdapter(listitem);
+        recyclerViewListitem.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
+        recyclerViewListitem.setAdapter(listitemAdapter);
     }
 }

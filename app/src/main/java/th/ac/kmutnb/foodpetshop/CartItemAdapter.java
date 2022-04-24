@@ -1,7 +1,5 @@
 package th.ac.kmutnb.foodpetshop;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,7 +85,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewItem = itemView.findViewById(R.id.imageItem);
-            textViewItem = itemView.findViewById(R.id.textName);
+            textViewItem = itemView.findViewById(R.id.myorderitemName);
             amountViewItem = itemView.findViewById(R.id.textAmount);
             priceViewItem = itemView.findViewById(R.id.textTotalPrice);
             cardViewItem = itemView.findViewById(R.id.cardviewlist);

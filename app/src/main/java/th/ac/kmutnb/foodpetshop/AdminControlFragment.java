@@ -1,6 +1,7 @@
 package th.ac.kmutnb.foodpetshop;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,8 +15,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ConfirmOrderListFragment extends Fragment {
+public class AdminControlFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -48,15 +49,16 @@ public class ConfirmOrderListFragment extends Fragment {
     private RequestQueue mQueue;
 
     private RecyclerView recyclerViewListitem;
-    private ConfirmOrderListAdapter listitemAdapter;
-    private ArrayList<CartListItemModel> listitem = new ArrayList<>();
+    private StorageItemListAdapter listitemAdapter;
 
-    private double totalpriceitemall = 0;
+    private ArrayList<ListItemModel> listitem = new ArrayList<>();
 
-    public ConfirmOrderListFragment() { }
+    public AdminControlFragment() {
+        // Required empty public constructor
+    }
 
-    public static ConfirmOrderListFragment newInstance(String param1, String param2) {
-        ConfirmOrderListFragment fragment = new ConfirmOrderListFragment();
+    public static AdminControlFragment newInstance(String param1, String param2) {
+        AdminControlFragment fragment = new AdminControlFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -76,41 +78,54 @@ public class ConfirmOrderListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_confirm_order_list, container, false);
+        // Inflate the layout for this fragment
+        view =  inflater.inflate(R.layout.fragment_admin_control, container, false);
+
         view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
         });
+
         return view;
     }
 
     @Override
-    public void onStart() {
+    public void onStart(){
         super.onStart();
-        ImageButton backbutton = view.findViewById(R.id.imagebuttonbackcart);
-        backbutton.setOnClickListener(new View.OnClickListener(){
+
+        Button button1 = view.findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(mParam1, null));
+                transaction.replace(R.id.navHostFragment, AdminControlFragment.newInstance(null, null));
                 transaction.commit();
             }
         });
 
-        ImageButton paymentButton = view.findViewById(R.id.confirmProfileButton);
-        paymentButton.setOnClickListener(new View.OnClickListener() {
+        Button button2 = view.findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.navHostFragment, PaymentFragment.newInstance(mParam1, null));
+                transaction.replace(R.id.navHostFragment, ManageOrderFragment.newInstance(null, null));
                 transaction.commit();
             }
         });
 
-        getItems("http://192.168.0.105:4990/api/users/cartitems/" + mParam1);
+        Button button3 = view.findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), AddItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        getItems("http://192.168.0.105:4990/api/items/getitems");
     }
 
     public void getItems(String url){
@@ -125,21 +140,21 @@ public class ConfirmOrderListFragment extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
                         Gson gson = new Gson();
-                        Log.i(TAG, response.toString());
+
                         JSONObject jsObj;   // = null;
                         for (int i=0; i < response.length(); i++ ) {
                             try {
                                 jsObj = response.getJSONObject(i);
-                                CartListItemModel dataitem = gson.fromJson(String.valueOf(jsObj), CartListItemModel.class);
+                                ListItemModel dataitem = gson.fromJson(String.valueOf(jsObj), ListItemModel.class);
                                 listitem.add(dataitem);
-                                totalpriceitemall += dataitem.getItemprice();
+                                Log.d(TAG,"gson "+ dataitem.getItemname());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
 
                         if (listitem.size() > 0){
-                            displayListview(totalpriceitemall);
+                            displayListview();
                         }
 
                         pDialog.hide();
@@ -159,13 +174,9 @@ public class ConfirmOrderListFragment extends Fragment {
         mQueue.add(jsRequest);
     }
 
-    public void displayListview(double totalpriceitemall){
-        TextView totalPrice = view.findViewById(R.id.textTotalPrice2);
-        String totalpriceallformatter = String.format("%,.2f", totalpriceitemall);
-        totalPrice.setText("ราคารวมทั้งหมด: ฿" + totalpriceallformatter);
-
-        recyclerViewListitem = (RecyclerView) getView().findViewById(R.id.rv_confirmorderlist);
-        listitemAdapter = new ConfirmOrderListAdapter(listitem);
+    public void displayListview(){
+        recyclerViewListitem = (RecyclerView) getView().findViewById(R.id.rv_storagelistitem);
+        listitemAdapter = new StorageItemListAdapter(listitem);
         recyclerViewListitem.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerViewListitem.setAdapter(listitemAdapter);
     }

@@ -4,12 +4,12 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -87,6 +87,12 @@ public class CartItemInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cart_item_info, container, false);
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         return view;
     }
 
@@ -116,7 +122,7 @@ public class CartItemInfoFragment extends Fragment {
         addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                EditText inputamount = view.findViewById(R.id.inputamountitem);
+                EditText inputamount = view.findViewById(R.id.storageItemName);
                 String input_amount = inputamount.getText().toString();
                 Log.i(TAG, input_amount);
                 if(input_amount.isEmpty()){
@@ -148,7 +154,7 @@ public class CartItemInfoFragment extends Fragment {
         editItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                EditText inputamount = view.findViewById(R.id.inputamountitem);
+                EditText inputamount = view.findViewById(R.id.storageItemName);
                 String input_amount = inputamount.getText().toString();
                 if(input_amount.isEmpty()){
                     Toast.makeText(getActivity(),"คุณจำเป็นต้องกรอกจำนวนที่ต้องการจะซื้อ", Toast.LENGTH_SHORT).show();
@@ -387,7 +393,7 @@ public class CartItemInfoFragment extends Fragment {
 
     public void SetItemData(){
         String baseURL = "http://154.202.2.5/foodpetshop/img/";
-        ImageView itemimgview = view.findViewById(R.id.itemInfoImage2);
+        ImageView itemimgview = view.findViewById(R.id.stroageItemImg);
         String imgUrl = baseURL + itemimg;
         Picasso.get()
                 .load(imgUrl)
@@ -414,7 +420,7 @@ public class CartItemInfoFragment extends Fragment {
         TextView itemdetailtxt = view.findViewById(R.id.itemDetail);
         itemdetailtxt.setText(itemdetail);
 
-        EditText inputamountEx = view.findViewById(R.id.inputamountitem);
+        EditText inputamountEx = view.findViewById(R.id.storageItemName);
         inputamountEx.setText("" + itemamount);
     }
 
@@ -441,7 +447,7 @@ public class CartItemInfoFragment extends Fragment {
                         }
 
                         if(userName != null && userEmail != null && userPhone != null){
-                            EditText inputAmount = view.findViewById(R.id.inputamountitem);
+                            EditText inputAmount = view.findViewById(R.id.storageItemName);
                             inputAmount.setVisibility(View.VISIBLE);
 
                             ImageButton buyitem = view.findViewById(R.id.buybutton);

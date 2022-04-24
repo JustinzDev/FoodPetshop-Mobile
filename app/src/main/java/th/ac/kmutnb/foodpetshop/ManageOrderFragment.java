@@ -14,8 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -32,8 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ConfirmOrderListFragment extends Fragment {
-
+public class ManageOrderFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -48,15 +46,16 @@ public class ConfirmOrderListFragment extends Fragment {
     private RequestQueue mQueue;
 
     private RecyclerView recyclerViewListitem;
-    private ConfirmOrderListAdapter listitemAdapter;
-    private ArrayList<CartListItemModel> listitem = new ArrayList<>();
+    private ManageOrderAdapter listitemAdapter;
+    private ArrayList<MyOrderListModel> listitem = new ArrayList<>();
 
-    private double totalpriceitemall = 0;
 
-    public ConfirmOrderListFragment() { }
+    public ManageOrderFragment() {
+        // Required empty public constructor
+    }
 
-    public static ConfirmOrderListFragment newInstance(String param1, String param2) {
-        ConfirmOrderListFragment fragment = new ConfirmOrderListFragment();
+    public static ManageOrderFragment newInstance(String param1, String param2) {
+        ManageOrderFragment fragment = new ManageOrderFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -76,7 +75,8 @@ public class ConfirmOrderListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_confirm_order_list, container, false);
+        // Inflate the layout for this fragment
+        view =  inflater.inflate(R.layout.fragment_manage_order, container, false);
         view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
@@ -86,34 +86,43 @@ public class ConfirmOrderListFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
+    public void onStart(){
         super.onStart();
-        ImageButton backbutton = view.findViewById(R.id.imagebuttonbackcart);
-        backbutton.setOnClickListener(new View.OnClickListener(){
+
+        Button button1 = view.findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.navHostFragment, UserCartFragment.newInstance(mParam1, null));
+                transaction.replace(R.id.navHostFragment, AdminControlFragment.newInstance(null, null));
                 transaction.commit();
             }
         });
 
-        ImageButton paymentButton = view.findViewById(R.id.confirmProfileButton);
-        paymentButton.setOnClickListener(new View.OnClickListener() {
+        Button button2 = view.findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.navHostFragment, PaymentFragment.newInstance(mParam1, null));
+                transaction.replace(R.id.navHostFragment, ManageOrderFragment.newInstance(null, null));
                 transaction.commit();
             }
         });
 
-        getItems("http://192.168.0.105:4990/api/users/cartitems/" + mParam1);
+        Button button3 = view.findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            }
+        });
+
+        getAllOrderList("http://192.168.0.105:4990/api/items/getallorderlist");
     }
 
-    public void getItems(String url){
+    public void getAllOrderList(String url){
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading..");
         pDialog.show();
@@ -130,16 +139,15 @@ public class ConfirmOrderListFragment extends Fragment {
                         for (int i=0; i < response.length(); i++ ) {
                             try {
                                 jsObj = response.getJSONObject(i);
-                                CartListItemModel dataitem = gson.fromJson(String.valueOf(jsObj), CartListItemModel.class);
+                                MyOrderListModel dataitem = gson.fromJson(String.valueOf(jsObj), MyOrderListModel.class);
                                 listitem.add(dataitem);
-                                totalpriceitemall += dataitem.getItemprice();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
 
                         if (listitem.size() > 0){
-                            displayListview(totalpriceitemall);
+                            displayListview();
                         }
 
                         pDialog.hide();
@@ -159,13 +167,9 @@ public class ConfirmOrderListFragment extends Fragment {
         mQueue.add(jsRequest);
     }
 
-    public void displayListview(double totalpriceitemall){
-        TextView totalPrice = view.findViewById(R.id.textTotalPrice2);
-        String totalpriceallformatter = String.format("%,.2f", totalpriceitemall);
-        totalPrice.setText("ราคารวมทั้งหมด: ฿" + totalpriceallformatter);
-
-        recyclerViewListitem = (RecyclerView) getView().findViewById(R.id.rv_confirmorderlist);
-        listitemAdapter = new ConfirmOrderListAdapter(listitem);
+    public void displayListview(){
+        recyclerViewListitem = (RecyclerView) getView().findViewById(R.id.rv_manageorderlist);
+        listitemAdapter = new ManageOrderAdapter(listitem);
         recyclerViewListitem.setLayoutManager(new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false));
         recyclerViewListitem.setAdapter(listitemAdapter);
     }
