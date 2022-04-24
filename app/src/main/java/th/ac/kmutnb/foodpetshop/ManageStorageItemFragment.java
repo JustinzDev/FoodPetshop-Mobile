@@ -366,8 +366,7 @@ public class ManageStorageItemFragment extends Fragment {
         edittextitemamount.setText("" + formattedAmount);
 
         EditText edittextitemprice = view.findViewById(R.id.storageItemPrice);
-        String formattedPrice = String.format("%,.2f", price);
-        edittextitemprice.setText("" + formattedPrice);
+        edittextitemprice.setText("" + price);
 
         EditText edittextitemcategory = view.findViewById(R.id.storageItemCategory);
         edittextitemcategory.setText(category);
