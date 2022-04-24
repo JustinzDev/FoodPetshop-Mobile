@@ -99,7 +99,7 @@ public class ListitemCategoryFragment extends Fragment {
 
         TextView categorytitie = view.findViewById(R.id.categoryTitle);
         categorytitie.setText("หมวดหมู่ > " + mParam2);
-        jsonParse("http://192.168.0.105:4990/api/items/getitems/" + mParam1);
+        jsonParse("http://154.202.2.5:4990/api/items/getitems/" + mParam1);
     }
 
     public void jsonParse(String url){

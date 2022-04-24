@@ -124,11 +124,11 @@ public class EditProfileFragment extends Fragment {
                 inputLastname = edittextLasname.getText().toString();
                 inputAddress = edittextAddress.getText().toString();
 
-                updateprofileAPI("http://192.168.0.105:4990/api/users/update_profile");
+                updateprofileAPI("http://154.202.2.5:4990/api/users/update_profile");
             }
         });
 
-        authToken("http://192.168.0.105:4990/api/users/auth_token", Token);
+        authToken("http://154.202.2.5:4990/api/users/auth_token", Token);
     }
 
     public void getProfileData(String url){
@@ -225,7 +225,7 @@ public class EditProfileFragment extends Fragment {
 
                         if(userID != null){
                             realuserID = userID;
-                            getProfileData("http://192.168.0.105:4990/api/users/get_profiledata");
+                            getProfileData("http://154.202.2.5:4990/api/users/get_profiledata");
 
                         } else{
                             SharedPreferences preferences = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);

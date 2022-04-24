@@ -121,7 +121,7 @@ public class ManageOrderInfoFragment extends Fragment {
         button1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                ManageStateThisOrder("http://192.168.0.105:4990/api/items/managestatethisorder");
+                ManageStateThisOrder("http://154.202.2.5:4990/api/items/managestatethisorder");
             }
         });
 
@@ -130,7 +130,7 @@ public class ManageOrderInfoFragment extends Fragment {
             @Override
             public void onClick(View v){
                 if(mParam4.matches("wait")) {
-                    deleteThisOrder("http://192.168.0.105:4990/api/items/deletethisorder");
+                    deleteThisOrder("http://154.202.2.5:4990/api/items/deletethisorder");
                 }
             }
         });
@@ -156,8 +156,8 @@ public class ManageOrderInfoFragment extends Fragment {
         String priceformatter = String.format("%,.2f", mParam5);
         totalprice.setText("รวม: " + priceformatter + " บาท");
 
-        getOwnerOrder("http://192.168.0.105:4990/api/users/getusername/" + mParam2);
-        getMyOrderList("http://192.168.0.105:4990/api/items/manageorderlist/" + mParam1);
+        getOwnerOrder("http://154.202.2.5:4990/api/users/getusername/" + mParam2);
+        getMyOrderList("http://154.202.2.5:4990/api/items/manageorderlist/" + mParam1);
     }
 
     public void ManageStateThisOrder(String url){

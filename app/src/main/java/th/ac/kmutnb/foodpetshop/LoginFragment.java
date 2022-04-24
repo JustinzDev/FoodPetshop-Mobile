@@ -110,7 +110,7 @@ public class LoginFragment extends Fragment {
                 String usernameText = username.getText().toString();
                 String passwordText = password.getText().toString();
 
-                String url = "http://192.168.0.105:4990/api/users/login";
+                String url = "http://154.202.2.5:4990/api/users/login";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
@@ -145,10 +145,8 @@ public class LoginFragment extends Fragment {
                                     Log.i(TAG, userToken);
                                     Log.i(TAG, "userID: " + userID);
 
-                                    FragmentManager manager = getFragmentManager();
-                                    FragmentTransaction transaction = manager.beginTransaction();
-                                    transaction.replace(R.id.navHostFragment, MainFragment.newInstance(null, null));
-                                    transaction.commit();
+                                    Intent itnHome = new Intent(getActivity(), MainActivity.class);
+                                    startActivity(itnHome);
                                 }
                             }
                         },

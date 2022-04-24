@@ -140,7 +140,7 @@ public class ManageStorageItemFragment extends Fragment {
                 EditText edittextitemdetail = view.findViewById(R.id.storageItemDetail);
                 String itemDetail = edittextitemdetail.getText().toString();
 
-                editItem("http://192.168.0.105:4990/api/items/edititem", itemName, itemAmountReal, itemPriceReal, itemCategory, itemDetail);
+                editItem("http://154.202.2.5:4990/api/items/edititem", itemName, itemAmountReal, itemPriceReal, itemCategory, itemDetail);
             }
         });
 
@@ -148,12 +148,12 @@ public class ManageStorageItemFragment extends Fragment {
         buttonDelete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                deleteItem("http://192.168.0.105:4990/api/items/deleteitem/" + mParam1);
+                deleteItem("http://154.202.2.5:4990/api/items/deleteitem/" + mParam1);
             }
         });
 
         Log.i(TAG, mParam1);
-        loadItem("http://192.168.0.105:4990/api/items/getitem/" + mParam1);
+        loadItem("http://154.202.2.5:4990/api/items/getitem/" + mParam1);
     }
 
     public void editItem(String url, String itemName, int itemAmountReal, double itemPriceReal, String itemCategory, String itemDetail){

@@ -119,7 +119,7 @@ public class ManageOrderFragment extends Fragment {
             }
         });
 
-        getAllOrderList("http://192.168.0.105:4990/api/items/getallorderlist");
+        getAllOrderList("http://154.202.2.5:4990/api/items/getallorderlist");
     }
 
     public void getAllOrderList(String url){

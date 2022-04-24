@@ -125,7 +125,7 @@ public class AdminControlFragment extends Fragment {
             }
         });
 
-        getItems("http://192.168.0.105:4990/api/items/getitems");
+        getItems("http://154.202.2.5:4990/api/items/getitems");
     }
 
     public void getItems(String url){

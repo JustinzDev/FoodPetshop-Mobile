@@ -99,7 +99,7 @@ public class AddItemActivity extends AppCompatActivity {
                 String itemDetail = itemdetail.getText().toString();
 
                 if(!itemName.isEmpty() && !itemAmountEx.isEmpty() && !itemPriceEx.isEmpty() && !itemCategory.isEmpty() && !itemDetail.isEmpty()) {
-                    addItemToStorage("http://192.168.0.105:4990/api/items/additemstorage", itemName, itemAmount, itemPrice, itemCategory, itemDetail);
+                    addItemToStorage("http://154.202.2.5:4990/api/items/additemstorage", itemName, itemAmount, itemPrice, itemCategory, itemDetail);
                 }
             }
         });
@@ -211,8 +211,6 @@ public class AddItemActivity extends AppCompatActivity {
             Uri path = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
-                imageView.setMaxHeight(30);
-                imageView.setMaxWidth(30);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();

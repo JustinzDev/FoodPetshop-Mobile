@@ -115,8 +115,8 @@ public class CartItemInfoFragment extends Fragment {
         });
 
         Log.i(TAG, mParam1);
-        loadItem("http://192.168.0.105:4990/api/users/getitemcart/" + mParam1);
-        authToken("http://192.168.0.105:4990/api/users/auth_token", Token);
+        loadItem("http://154.202.2.5:4990/api/users/getitemcart/" + mParam1);
+        authToken("http://154.202.2.5:4990/api/users/auth_token", Token);
 
         ImageButton addtocart = view.findViewById(R.id.buybutton2);
         addtocart.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +134,7 @@ public class CartItemInfoFragment extends Fragment {
                     builder.setMessage("คุณต้องการที่จะลบสินค้า '" + itemname + "' ออกจากตะกร้าสินค้าของคุณหรือไม่?");
                     builder.setPositiveButton("ลบ", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            deleteItemCart("http://192.168.0.105:4990/api/users/deleteitemcard");
+                            deleteItemCart("http://154.202.2.5:4990/api/users/deleteitemcard");
                         }
                     });
                     builder.setNegativeButton("ไม่เลย", new DialogInterface.OnClickListener() {
@@ -164,7 +164,7 @@ public class CartItemInfoFragment extends Fragment {
                     if(itemamountEx > itemamountStorage){
                         Toast.makeText(getActivity(),"สินค้าในคลังมีไม่เพียงพอกับจำนวนที่คุณต้องการ!", Toast.LENGTH_SHORT).show();
                     }
-                    else updateItemAPI("http://192.168.0.105:4990/api/users/updateitemcard", itemamountEx);
+                    else updateItemAPI("http://154.202.2.5:4990/api/users/updateitemcard", itemamountEx);
                 }
             }
         });
@@ -308,7 +308,7 @@ public class CartItemInfoFragment extends Fragment {
                             itemimg = jsonobject.getString("itemimg");
 
                             pDialog.hide();
-                            loadItemInfo("http://192.168.0.105:4990/api/items/getitem/" + itemid);
+                            loadItemInfo("http://154.202.2.5:4990/api/items/getitem/" + itemid);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

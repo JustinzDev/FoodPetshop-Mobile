@@ -135,8 +135,8 @@ public class MainFragment extends Fragment {
         recyclerView.setAdapter(staticRvAdapter);
 
         //itemlist
-        getItems("http://192.168.0.105:4990/api/items/getitems");
-        authToken("http://192.168.0.105:4990/api/users/auth_token", Token);
+        getItems("http://154.202.2.5:4990/api/items/getitems");
+        authToken("http://154.202.2.5:4990/api/users/auth_token", Token);
     }
 
     public void authToken(String url, String Token){
@@ -184,8 +184,6 @@ public class MainFragment extends Fragment {
                         } else{
                             SharedPreferences preferences = getContext().getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                             preferences.edit().remove("Token").commit();
-                            Intent itnHome = new Intent(getActivity(), MainActivity.class);
-                            startActivity(itnHome);
                         }
                     }
                 },

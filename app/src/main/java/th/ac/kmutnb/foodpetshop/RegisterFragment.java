@@ -105,7 +105,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-                String url = "http://192.168.0.105:4990/api/users/register";
+                String url = "http://154.202.2.5:4990/api/users/register";
                 StringRequest stringRequest = new StringRequest(Request.Method.POST,url,
                         new Response.Listener<String>() {
                             @Override

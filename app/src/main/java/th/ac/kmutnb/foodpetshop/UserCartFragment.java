@@ -96,7 +96,7 @@ public class UserCartFragment extends Fragment {
         super.onStart();
 
         Log.i(TAG, mParam1);
-        getItems("http://192.168.0.105:4990/api/users/cartitems/" + mParam1);
+        getItems("http://154.202.2.5:4990/api/users/cartitems/" + mParam1);
 
         ImageButton backbutton = view.findViewById(R.id.imagebuttonbackcart);
         backbutton.setOnClickListener(new View.OnClickListener(){

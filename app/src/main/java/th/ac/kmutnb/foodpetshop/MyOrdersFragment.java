@@ -104,7 +104,7 @@ public class MyOrdersFragment extends Fragment {
             }
         });
 
-        getMyOrderList("http://192.168.0.105:4990/api/users/myorderkeylist/" + userID);
+        getMyOrderList("http://154.202.2.5:4990/api/users/myorderkeylist/" + userID);
     }
 
     public void getMyOrderList(String url){

@@ -129,7 +129,7 @@ public class MyOrderInfoFragment extends Fragment {
         String priceformatter = String.format("%,.2f", mParam5);
         totalprice.setText("รวม: " + priceformatter + " บาท");
 
-        getMyOrderList("http://192.168.0.105:4990/api/users/myorderlist/" + mParam2 + "/" + mParam1);
+        getMyOrderList("http://154.202.2.5:4990/api/users/myorderlist/" + mParam2 + "/" + mParam1);
     }
 
     public void getMyOrderList(String url){

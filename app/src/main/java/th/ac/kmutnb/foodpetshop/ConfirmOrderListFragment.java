@@ -110,7 +110,7 @@ public class ConfirmOrderListFragment extends Fragment {
             }
         });
 
-        getItems("http://192.168.0.105:4990/api/users/cartitems/" + mParam1);
+        getItems("http://154.202.2.5:4990/api/users/cartitems/" + mParam1);
     }
 
     public void getItems(String url){

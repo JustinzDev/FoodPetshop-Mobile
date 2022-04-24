@@ -81,7 +81,7 @@ public class OrderFinishFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        confirmOrderFinish("http://192.168.0.105:4990/api/items/deletethisorder");
+        confirmOrderFinish("http://154.202.2.5:4990/api/items/deletethisorder");
     }
 
     public void confirmOrderFinish(String url){

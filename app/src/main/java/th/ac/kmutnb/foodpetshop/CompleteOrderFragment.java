@@ -103,7 +103,7 @@ public class CompleteOrderFragment extends Fragment {
     public void onStart(){
         super.onStart();
 
-        getItems("http://192.168.0.105:4990/api/users/cartitems/" + mParam1);
+        getItems("http://154.202.2.5:4990/api/users/cartitems/" + mParam1);
 
         ImageButton nextmyorder = view.findViewById(R.id.confirmProfileButton);
         nextmyorder.setOnClickListener(new View.OnClickListener(){
@@ -153,13 +153,13 @@ public class CompleteOrderFragment extends Fragment {
                                 totalpriceallitem += itemTotalPrice;
                                 coutingitem++;
                                 if(itemImgPreview == null) itemImgPreview = itemImg;
-                                createOrderItem("http://192.168.0.105:4990/api/users/createorderitem", cartID, itemName, itemOwnerID, itemID, itemAmount, itemTotalPrice, itemImg);
+                                createOrderItem("http://154.202.2.5:4990/api/users/createorderitem", cartID, itemName, itemOwnerID, itemID, itemAmount, itemTotalPrice, itemImg);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
 
-                        createKeyItem("http://192.168.0.105:4990/api/users/createkeyorderlist");
+                        createKeyItem("http://154.202.2.5:4990/api/users/createkeyorderlist");
 
                         pDialog.hide();
                     }

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
                 SharedPreferences sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
                 String Token = sp.getString("Token", "");
-                authToken("http://192.168.0.105:4990/api/users/auth_token", Token, view);
+                authToken("http://154.202.2.5:4990/api/users/auth_token", Token, view);
             }
         });
 

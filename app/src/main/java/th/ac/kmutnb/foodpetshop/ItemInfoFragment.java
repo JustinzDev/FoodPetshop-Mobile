@@ -112,8 +112,8 @@ public class ItemInfoFragment extends Fragment {
             }
         });
 
-        loadItem("http://192.168.0.105:4990/api/items/getitem/" + mParam1);
-        authToken("http://192.168.0.105:4990/api/users/auth_token", Token);
+        loadItem("http://154.202.2.5:4990/api/items/getitem/" + mParam1);
+        authToken("http://154.202.2.5:4990/api/users/auth_token", Token);
 
         ImageButton addtocart = view.findViewById(R.id.buybutton2);
         addtocart.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +144,7 @@ public class ItemInfoFragment extends Fragment {
         pDialog.setMessage("Loading..");
         pDialog.show();
 
-        String url = "http://192.168.0.105:4990/api/users/additemcart";
+        String url = "http://154.202.2.5:4990/api/users/additemcart";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
